@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Ивенты{% endblock %}</title>
+<link rel="stylesheet" href="{% static 'crs/css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/events/" class="nav-btn {% if request.path == '/events/' %}active{% endif %}">События</a>
+        <a href="/clients/" class="nav-btn {% if '/clients/' in request.path %}active{% endif %}">Клиенты</a>
+        <a href="/orders/" class="nav-btn {% if '/orders/' in request.path %}active{% endif %}">Заказы</a>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

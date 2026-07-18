@@ -1,0 +1,21 @@
+установка postgresql через docker:
+docker compose up -d
+
+проверка:
+docker ps
+
+установка коннектора postgresql:
+pip install "psycopg[binary]"
+
+
+docker
+проверить:
+docker ps
+
+запустить:
+docker-compose up -d
+
+очистить:
+docker compose down -v
+python manage.py migrate
+python manage.py createsuperuser

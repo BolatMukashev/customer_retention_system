@@ -1,0 +1,153 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #f4f5f9;
+    color: #2b2d3a;
+    padding: 0;
+}
+
+.page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    color: #6b6f80;
+    margin-bottom: 32px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #5b6bf5, #7c5cf5);
+    padding: 14px 18px;
+}
+
+.client-name {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.card-body {
+    padding: 18px;
+}
+
+.relation {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.event-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+}
+
+.event-type {
+    background: #eef0ff;
+    color: #5b6bf5;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.countdown {
+    background: #fff2e0;
+    color: #d3821a;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.event-date {
+    color: #9a9ea8;
+    font-size: 13px;
+}
+
+.empty {
+    color: #9a9ea8;
+    font-size: 15px;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 14px;
+    padding: 8px 14px;
+    background: #25D366;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+}
+
+.whatsapp-btn:hover {
+    background: #1ebe5b;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    padding: 14px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    margin-bottom: 30px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: #6b6f80;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-btn:hover {
+    background: #eef0ff;
+    color: #5b6bf5;
+}
+
+.nav-btn.active {
+    background: #5b6bf5;
+    color: #ffffff;
+}

@@ -1,0 +1,21 @@
+from django.db import models
+from organizations.models import Organization
+from clients.models import Client
+
+
+class Order(models.Model):
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='orders')
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='orders')
+    amount = models.DecimalField(verbose_name="Сумма", max_digits=10, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
+
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+        ordering = ['-created_at']
+        constraints = [
+            models.UniqueConstraint(fields=['organization', 'client'], name='unique_order_per_org_and_client')
+        ]
+
+    def __str__(self):
+        return f"{self.client.name} ({self.client.phone}) - {self.amount}"
