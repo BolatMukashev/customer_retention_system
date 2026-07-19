@@ -1,0 +1,240 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRS — сервис напоминаний о клиентах</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo">CR<span>S</span></div>
+            <nav class="header-nav">
+                <a href="#problem">Зачем это нужно</a>
+                <a href="#how">Как работает</a>
+                <a href="#business">Кому подходит</a>
+                <a href="#tariff">Тариф</a>
+            </nav>
+            <div class="header-actions">
+                <a href="#" class="btn btn-outline">Войти</a>
+                <a href="#" class="btn btn-primary">Зарегистрироваться</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-grid">
+            <div>
+                <span class="hero-badge"><span class="dot"></span>Для бизнеса, где важны даты</span>
+                <h1>Не забывайте о клиентах — <em>CRS</em> напомнит первым</h1>
+                <p class="hero-desc">
+                    CRS запоминает дни рождения и годовщины ваших клиентов. Напомните о себе клиенту в самый нужный момент, пока он не ушёл к конкурентам.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary btn-lg">Подключить CRS</a>
+                    <a href="#how" class="btn btn-ghost-light btn-lg">Как это работает</a>
+                </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+                <div class="ticket ticket-1">
+                    <div class="ticket-eyebrow">Через 3 дня</div>
+                    <div class="ticket-title">День рождения Айгерим</div>
+                    <div class="ticket-dash"></div>
+                    <div class="ticket-meta">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92Z"/></svg>
+                        Ждёт вашего звонка
+                    </div>
+                </div>
+                <div class="ticket ticket-2">
+                    <div class="ticket-eyebrow">Сегодня</div>
+                    <div class="ticket-title">Годовщина свадьбы — Марат</div>
+                    <div class="ticket-dash"></div>
+                    <div class="ticket-meta">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                        Заказ оформлен
+                    </div>
+                </div>
+                <div class="ticket ticket-3">
+                    <div class="ticket-eyebrow">Через 6 дней</div>
+                    <div class="ticket-title">День рождения сына — Данияр</div>
+                    <div class="ticket-dash"></div>
+                    <div class="ticket-meta">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                        В очереди
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="problem" class="section">
+        <div class="container problem">
+            <div class="problem-visual" data-reveal>
+                <div class="fade-card">
+                    <div class="stamp">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                    </div>
+                    <div>
+                        <strong>Покупка №1</strong>
+                        <span>торт на день рождения дочери</span>
+                    </div>
+                </div>
+                <div class="fade-card is-faded">
+                    <div class="stamp">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                    </div>
+                    <div>
+                        <strong>Через год</strong>
+                        <span>клиент забыл, где заказывал</span>
+                    </div>
+                </div>
+                <div class="fade-card is-faded">
+                    <div class="stamp">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+                    </div>
+                    <div>
+                        <strong>Покупка №2</strong>
+                        <span>ушла к конкуренту в поиске</span>
+                    </div>
+                </div>
+            </div>
+            <div data-reveal style="--d:.1s">
+                <h2>Один раз купили — и забыли о вас</h2>
+                <p>Клиент купил торт на день рождения дочери. Через год у дочери снова день рождения —
+                    но клиент об этом не думает заранее, а вспоминает про вас он только в том случае, если вы сами напомните первым.</p>
+                <p><strong>CRS решает это иначе:</strong> хранит даты ваших клиентов и заранее предупреждает вас.
+                    Звоните или пишете клиенту первыми — пока он ещё не начал искать, у кого заказать в этот раз.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="how" class="section section-alt">
+        <div class="container">
+            <span class="eyebrow" data-reveal>Механика</span>
+            <h2 class="section-title" data-reveal>Как CRS возвращает клиентов</h2>
+            <p class="section-subtitle" data-reveal>Четыре простых шага — от первой продажи до звонка, который приводит клиента снова.</p>
+            <div class="steps">
+                <div class="step" data-reveal style="--d:0s">
+                    <span class="step-number">Шаг 1</span>
+                    <div class="icon-wrap">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21 12 16l-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16Z"/></svg>
+                    </div>
+                    <h3>Сохраняете контакт</h3>
+                    <p>При первой продаже вы добавляете номер телефона клиента в CRS — это займёт меньше минуты.</p>
+                </div>
+                <div class="step" data-reveal style="--d:.08s">
+                    <span class="step-number">Шаг 2</span>
+                    <div class="icon-wrap">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <h3>Отправляете клиенту анкету</h3>
+                    <p>Отправьте клиенту короткую анкету — за подарок или скидку. Он охотно расскажет о важных датах, а мы запомним</p>
+                </div>
+                <div class="step" data-reveal style="--d:.16s">
+                    <span class="step-number">Шаг 3</span>
+                    <div class="icon-wrap">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3h6v3H9zM8 12l2.5 2.5L16 9"/></svg>
+                    </div>
+                    <h3>Мы запоминаем даты</h3>
+                    <p>Дни рождения, годовщины, дни рождения детей — чем подробнее анкета, тем больше поводов напомнить о вас.</p>
+                </div>
+                <div class="step" data-reveal style="--d:.24s">
+                    <span class="step-number">Шаг 4</span>
+                    <div class="icon-wrap">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92Z"/></svg>
+                    </div>
+                    <h3>CRS напоминает вам</h3>
+                    <p>За 3 дня до даты CRS присылает вам напоминание — вы звоните или пишете клиенту и предлагаете заказ.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="what" class="section">
+        <div class="container">
+            <span class="eyebrow" data-reveal>Что внутри</span>
+            <h2 class="section-title" data-reveal>Что вы получаете</h2>
+            <p class="section-subtitle" data-reveal>Инструменты, которые помогают не забыть о клиенте и напомнить о себе вовремя.</p>
+            <div class="features">
+                <div class="feature-card" data-reveal style="--d:0s">
+                    <div class="feature-icon coral">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M12 14.5c-1-1-3-.6-3 1 0 1.6 3 3 3 3s3-1.4 3-3c0-1.6-2-2-3-1Z"/></svg>
+                    </div>
+                    <h3>База клиентов с датами</h3>
+                    <p>Дни рождения, годовщины и другие важные события хранятся в одном месте, а не в блокноте или в голове менеджера.</p>
+                </div>
+                <div class="feature-card" data-reveal style="--d:.08s">
+                    <div class="feature-icon gold">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92Z"/></svg>
+                    </div>
+                    <h3>Напоминания о датах вовремя</h3>
+                    <p>Не нужно самим следить за календарём клиентов — CRS предупредит вас за 2–3 дня до события, а звоните и предлагаете заказ уже вы.</p>
+                </div>
+                <div class="feature-card" data-reveal style="--d:.16s">
+                    <div class="feature-icon ink">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg>
+                    </div>
+                    <h3>Рост повторных продаж</h3>
+                    <p>Клиенты заказывают у вас снова — просто потому, что вы напомнили о себе в нужный момент.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="business" class="section section-alt">
+        <div class="container">
+            <span class="eyebrow" data-reveal>Кому подходит</span>
+            <h2 class="section-title" data-reveal>Бизнесу с праздничными покупками</h2>
+            <p class="section-subtitle" data-reveal>Если ваши клиенты покупают подарки к датам — CRS будет вам особенно полезен.</p>
+            <div class="categories" data-reveal>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="2.3"/><circle cx="12" cy="19" r="2.3"/><circle cx="5" cy="12" r="2.3"/><circle cx="19" cy="12" r="2.3"/></svg>Цветочные магазины</span>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 21h16"/><path d="M12 11V7M12 3v1"/><path d="M2 21c1-2 3-2 4 0 1-2 3-2 4 0 1-2 3-2 4 0 1-2 3-2 4 0"/></svg>Кондитерские</span>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 1 5 5c0 3-2 5-3.5 6.5S12 17 12 17s-1-1.8-1.5-3.5S7 10 7 7a5 5 0 0 1 5-5Z"/><path d="M12 17v5M10 22h4"/></svg>Магазины шаров</span>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="2"/><circle cx="16" cy="9" r="2"/><rect x="5" y="11" width="14" height="9" rx="4.5"/><path d="M9.5 15.5h5"/></svg>Магазины игрушек</span>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10c0-4 3.5-7 8-7s8 3 8 7-3 4-8 4-8 0-8-4Z"/><path d="M9 10v.01M15 10v.01M9.5 14c1 1 4 1 5 0"/></svg>Аниматоры</span>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9Z"/><path d="M2 9h20M8 3l4 6-4 12M16 3l-4 6 4 12"/></svg>Ювелирные магазины</span>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13a3 3 0 0 1 0 6h-1"/><path d="M4 9v6a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V9"/><path d="M6 5c.5 1 1.5 1 2 0M10 5c.5 1 1.5 1 2 0"/></svg>Кафе и рестораны</span>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4h8v2M12 11v5M9 13.5h6"/></svg>Игровые комнаты</span>
+                <span class="category-tag"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.9.4-1.5 1-1.5 2.2"/><path d="M12 17.2v.01"/></svg>Квизы</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="tariff" class="section">
+        <div class="container">
+            <span class="eyebrow" data-reveal>Тариф</span>
+            <h2 class="section-title" data-reveal>Один тариф — без лишних условий</h2>
+            <p class="section-subtitle" data-reveal>Всё, что нужно для запуска повторных продаж, входит в стоимость подписки.</p>
+            <div class="tariff-card" data-reveal>
+                <div class="tariff-badge">Базовый</div>
+                <div class="tariff-price">50 000 ₸</div>
+                <div class="tariff-period">в год</div>
+                <ul class="tariff-features">
+                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>База данных клиентов</li>
+                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Автоматические напоминания</li>
+                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Анкетирование клиентов</li>
+                    <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Аналитика повторных продаж</li>
+                </ul>
+                <a href="#" class="btn btn-primary btn-block">Зарегистрироваться</a>
+            </div>
+            <p class="tariff-note" data-reveal>Скоро: Премиум тариф с расширенной аналитикой</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-logo">CR<span>S</span></div>
+            <p>Сервис напоминаний, который возвращает клиентов вовремя</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'main/js/script.js' %}"></script>
+</body>
+</html>

@@ -4,9 +4,11 @@ from clients.models import Client
 
 
 class Order(models.Model):
+    id = models.BigAutoField(primary_key=True)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='orders')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='orders')
-    amount = models.DecimalField(verbose_name="Сумма", max_digits=10, decimal_places=2)
+    amount = models.PositiveIntegerField(verbose_name="Сумма")
+    note = models.TextField(verbose_name="Примечание", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
 
     class Meta:

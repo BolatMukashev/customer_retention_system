@@ -1,2 +1,8 @@
 .env
 .venv
+__pycache__
+.mimocode
+*.py[cod]
+*$py.class
+**/__pycache__/
+__pycache__/

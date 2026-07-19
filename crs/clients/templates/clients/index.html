@@ -7,21 +7,10 @@
     <p class="subtitle">Информация о клиентах</p>
 
     <div class="cards">
-        {% for e in events %}
+        {% for e in clients %}
         <div class="card">
-            <div class="card-header">
-                <span class="client-name">{{ e.client.name }} {{ e.client.phone }}</span>
-            </div>
             <div class="card-body">
-    <p class="relation">{{ e.get_relation_display }} по имени <strong>{{ e.person_name }}</strong></p>
-    <p class="event-info">
-        <span class="event-type">{{ e.get_event_type_display }}</span>
-        <span class="countdown">{% days_until e.event_date %}</span>
-    </p>
-    <p class="event-date">{{ e.event_date }}</p>
-    <a href="whatsapp://send?phone={{ e.client.phone }}" class="whatsapp-btn">
-    Написать в WhatsApp
-    </a>
+    <p class="relation">{{ e.name }} <strong>{{ e.phone }}</strong></p>
 </div>
         </div>
         {% empty %}

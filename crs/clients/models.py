@@ -9,6 +9,8 @@ class Client(models.Model):
         message="Введите номер телефона в корректном формате"
     )
 
+    id = models.BigAutoField(primary_key=True)
+
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='clients')
     phone = models.CharField(verbose_name="Телефон", max_length=15, validators=[phone_validator])
     name = models.CharField(verbose_name="Имя", max_length=100)

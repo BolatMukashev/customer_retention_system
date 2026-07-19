@@ -11,15 +11,15 @@ class User(AbstractUser):
     email = None
 
     phone = models.CharField(
-    max_length=20,
-    unique=True,
-    validators=[validate_phone],
-)
+        max_length=20,
+        unique=True,
+        validators=[validate_phone],
+    )
 
-    organization = models.ForeignKey(
+    organization = models.OneToOneField(
         Organization,
         on_delete=models.CASCADE,
-        related_name='users',
+        related_name="owner",
         null=True,
         blank=True,
     )
