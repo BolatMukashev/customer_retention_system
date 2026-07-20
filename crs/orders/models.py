@@ -10,11 +10,12 @@ class Order(models.Model):
     amount = models.PositiveIntegerField(verbose_name="Сумма")
     note = models.TextField(verbose_name="Примечание", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлён")
 
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
-        ordering = ['-created_at']
+        ordering = ['-updated_at']
         constraints = [
             models.UniqueConstraint(fields=['organization', 'client'], name='unique_order_per_org_and_client')
         ]

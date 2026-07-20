@@ -21,7 +21,7 @@ class Client(models.Model):
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
-        ordering = ['-created_at']
+        ordering = ['-updated_at']
         constraints = [
             models.UniqueConstraint(fields=['organization', 'phone'], name='unique_client_phone_per_org')
         ]
