@@ -1,0 +1,321 @@
+/* ==========================================================
+   Client detail page
+   Built from design.md — Minimalismo Funcional B2B
+   Tokens: primary #FFFFFF, secondary #F8F8F8, tertiary #007BFF,
+   neutral #212529, surface #28A745, accent #FFC107,
+   muted #6C757D, error #DC3545. Base radius 4px, spacing unit 8px.
+   ========================================================== */
+
+.client-page {
+    --border: rgba(33, 37, 41, 0.08);
+    --text: #212529;
+    --text-muted: #6C757D;
+    --bg-page: #F8F8F8;
+    --bg-card: #FFFFFF;
+    --accent: #007BFF;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    max-width: 760px;
+}
+
+.client-page .mono {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.875rem;
+}
+
+/* Back link */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-bottom: 16px;
+    transition: color 200ms ease-out;
+}
+
+.back-link:hover {
+    color: var(--text);
+}
+
+/* Header */
+.page-head--split {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.page-head--split h1 {
+    font-family: Inter, sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 4px;
+}
+
+.page-head--split .subtitle {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    border: none;
+    transition: background-color 200ms ease-out, box-shadow 200ms ease-out, transform 100ms ease-out;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9; /* ~8% darken of #007BFF */
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.24);
+}
+
+.btn-primary:active {
+    transform: translateY(-1px);
+}
+
+/* Profile card */
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    margin-bottom: 40px;
+}
+
+.profile-avatar {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0, 123, 255, 0.08);
+    color: var(--accent);
+    font-family: Inter, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-size: 0.9375rem;
+}
+
+.profile-row svg {
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.profile-row--note {
+    align-items: flex-start;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 24px;
+    padding-left: 20px;
+    border-left: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.stat-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* Sections */
+.list-section {
+    margin-bottom: 32px;
+}
+
+.section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.section-head h2 {
+    font-family: Inter, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+}
+
+.section-count {
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+}
+
+.row-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.row-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    transition: box-shadow 200ms ease-out;
+}
+
+.row-item:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.row-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.row-amount {
+    font-weight: 700;
+    color: var(--text);
+}
+
+.row-note {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.row-date {
+    flex-shrink: 0;
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+}
+
+.event-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    background: rgba(0, 123, 255, 0.08);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Empty states */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+    padding: 40px 24px;
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+}
+
+.empty-state svg {
+    margin-bottom: 6px;
+    color: var(--text-muted);
+}
+
+.empty-title {
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+    font-size: 0.9375rem;
+}
+
+.empty-text {
+    font-size: 0.8125rem;
+    margin: 0;
+    max-width: 32ch;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .page-head--split {
+        flex-direction: column;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-stats {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding-left: 0;
+        padding-top: 16px;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .row-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}

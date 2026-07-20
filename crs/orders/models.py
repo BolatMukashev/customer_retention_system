@@ -16,9 +16,6 @@ class Order(models.Model):
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
         ordering = ['-updated_at']
-        constraints = [
-            models.UniqueConstraint(fields=['organization', 'client'], name='unique_order_per_org_and_client')
-        ]
 
     def __str__(self):
         return f"{self.client.name} ({self.client.phone}) - {self.amount}"
