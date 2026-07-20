@@ -10,9 +10,21 @@
 </head>
 <body>
     <nav class="navbar">
+    <div class="nav-links">
         <a href="/events/" class="nav-btn {% if request.path == '/events/' %}active{% endif %}">События</a>
         <a href="/clients/" class="nav-btn {% if '/clients/' in request.path %}active{% endif %}">Клиенты</a>
         <a href="/orders/" class="nav-btn {% if '/orders/' in request.path %}active{% endif %}">Заказы</a>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <div class="nav-account">
+            <span class="nav-user">{{ request.user.phone }}</span>
+            <form method="post" action="{% url 'accounts:logout' %}" class="nav-logout-form">
+                {% csrf_token %}
+                <button type="submit" class="nav-logout-btn">Выйти</button>
+            </form>
+        </div>
+    {% endif %}
     </nav>
 
     {% block content %}

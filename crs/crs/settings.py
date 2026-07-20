@@ -137,3 +137,7 @@ STATIC_URL = 'static/'
 AUTH_USER_MODEL = 'accounts.User'
 
 STATICFILES_DIRS = [BASE_DIR / 'crs' / 'static']
+
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = '/events/'
+LOGOUT_REDIRECT_URL = 'accounts:login'
