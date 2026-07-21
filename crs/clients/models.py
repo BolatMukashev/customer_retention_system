@@ -1,6 +1,7 @@
 from django.core.validators import RegexValidator
 from django.db import models
 from organizations.models import Organization
+from events.templatetags.event_extras import format_phone
 
 
 class Client(models.Model):
@@ -41,4 +42,4 @@ class Client(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.name} ({self.phone})"
+        return f"{self.name} ({format_phone(self.phone)})"

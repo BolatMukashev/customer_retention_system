@@ -1,6 +1,6 @@
 from django import template
 from django.utils import timezone
-import re
+from crs.utils import format_phone_number
 
 
 register = template.Library()
@@ -36,7 +36,4 @@ def days_until(event_date):
 
 @register.filter
 def format_phone(value):
-    digits = re.sub(r"\D", "", str(value))
-    if len(digits) == 11 and digits[0] in ("7", "8"):
-        return f"+7 {digits[1:4]} {digits[4:7]} {digits[7:9]} {digits[9:11]}"
-    return value
+    return format_phone_number(value)
