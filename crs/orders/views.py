@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Order
 from .forms import OrderForm
 from clients.models import Client
@@ -53,3 +53,26 @@ def client_search(request):
 
     results = [{"id": c.id, "text": f"{c.name} ({c.phone})"} for c in clients]
     return JsonResponse({"results": results})
+
+
+@login_required
+def view(request, pk):
+    org = request.user.organization
+    order = get_object_or_404(Order, pk=pk, organization=org)
+    return render(request, "orders/view.html", {"order": order})
+
+
+@login_required
+def edit(request, pk):
+    org = request.user.organization
+    order = get_object_or_404(Order, pk=pk, organization=org)
+
+    if request.method == "POST":
+        form = OrderForm(request.POST, instance=order, organization=org)
+        if form.is_valid():
+            form.save()
+            return redirect("orders:order_view", pk=order.pk)
+    else:
+        form = OrderForm(instance=order, organization=org)
+
+    return render(request, "orders/edit.html", {"form": form, "order": order})
