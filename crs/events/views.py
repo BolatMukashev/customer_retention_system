@@ -1,8 +1,9 @@
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from .models import Event
+from .forms import EventForm
 
 
 @login_required
@@ -18,14 +19,42 @@ def index(request):
     return render(request, 'events/index.html', {'events': events, "org": org})
 
 
+@login_required
 def add(request):
-    pass
+    org = request.user.organization
+
+    if request.method == "POST":
+        form = EventForm(request.POST, organization=org)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.organization = org
+            event.save()
+            return redirect("events:index")
+    else:
+        form = EventForm(organization=org)
+
+    return render(request, "events/add.html", {"form": form})
 
 
-def view(request):
-    pass
+@login_required
+def view(request, pk):
+    org = request.user.organization
+    event = get_object_or_404(Event, pk=pk, organization=org)
+    return render(request, "events/view.html", {"event": event})
 
 
-def edit(request):
-    pass
+@login_required
+def edit(request, pk):
+    org = request.user.organization
+    event = get_object_or_404(Event, pk=pk, organization=org)
+
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=event, organization=org)
+        if form.is_valid():
+            form.save()
+            return redirect("events:event_view", pk=event.pk)
+    else:
+        form = EventForm(instance=event, organization=org)
+
+    return render(request, "events/edit.html", {"form": form, "event": event})
 
