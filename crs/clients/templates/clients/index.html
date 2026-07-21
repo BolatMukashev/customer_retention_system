@@ -4,8 +4,11 @@
 {% block content %}
 <div class="page">
     <div class="page-head">
-        <h1>Клиенты</h1>
-        <p class="subtitle">Информация о клиентах</p>
+        <div class="page-head-text">
+            <h1>Клиенты</h1>
+            <p class="subtitle">Информацию о предстоящих событиях.</p>
+        </div>
+        <a href="{% url 'clients:add' %}" class="btn-primary">Добавить нового клиента</a>
     </div>
 
     <div class="cards">

@@ -17,3 +17,15 @@ def index(request):
 
     return render(request, 'events/index.html', {'events': events, "org": org})
 
+
+def add(request):
+    pass
+
+
+def view(request):
+    pass
+
+
+def edit(request):
+    pass
+
