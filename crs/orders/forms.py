@@ -8,7 +8,13 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ['client', 'amount', 'note']
         widgets = {
-            'note': forms.Textarea(attrs={'rows': 3}),
+            'amount': forms.NumberInput(attrs={
+                'autocomplete': 'off',
+            }),
+            'note': forms.Textarea(attrs={
+                'rows': 3,
+                'autocomplete': 'new-password',
+            }),
         }
 
     def __init__(self, *args, organization=None, **kwargs):

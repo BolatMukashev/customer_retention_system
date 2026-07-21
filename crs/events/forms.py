@@ -8,7 +8,15 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = ['client', 'person_name', 'relation', 'event_type', 'event_date']
         widgets = {
-            'event_date': forms.DateInput(attrs={'type': 'date'}),
+            'person_name': forms.TextInput(attrs={
+                'autocomplete': 'new-password',
+                'autocorrect': 'off',
+                'spellcheck': 'false',
+            }),
+            'event_date': forms.DateInput(attrs={
+                'type': 'date',
+                'autocomplete': 'off',
+            }),
         }
 
     def __init__(self, *args, organization=None, **kwargs):

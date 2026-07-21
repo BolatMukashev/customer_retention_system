@@ -7,5 +7,21 @@ class ClientForm(forms.ModelForm):
         model = Client
         fields = ['name', 'phone', 'telegram', 'note']
         widgets = {
-            'note': forms.Textarea(attrs={'rows': 3}),
+            "name": forms.TextInput(attrs={
+                "autocomplete": "new-password",
+                "autocorrect": "off",
+                "spellcheck": "false",
+            }),
+            "phone": forms.TextInput(attrs={
+                "autocomplete": "new-password",
+            }),
+            "telegram": forms.TextInput(attrs={
+                "autocomplete": "new-password",
+                "autocorrect": "off",
+                "spellcheck": "false",
+            }),
+            "note": forms.Textarea(attrs={
+                "rows": 3,
+                "autocomplete": "new-password",
+            }),
         }
