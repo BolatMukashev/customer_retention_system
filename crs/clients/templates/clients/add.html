@@ -1,0 +1,55 @@
+{% extends "crs/layout.html" %}
+{% block title %}Новый клиент{% endblock %}
+{% block content %}
+<div class="page">
+    <div class="page-head">
+        <div class="page-head-text">
+            <h1>Новый клиент</h1>
+            <p class="subtitle">Добавление нового клиента</p>
+        </div>
+        <a href="{% url 'clients:index' %}" class="btn-ghost">Назад к клиентам</a>
+    </div>
+
+    <div class="card form-card">
+        <form method="post" class="client-form" novalidate>
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_name">Имя</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <p class="field-error">{{ form.name.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_phone">Телефон</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                    <p class="field-error">{{ form.phone.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_telegram">Телеграм</label>
+                {{ form.telegram }}
+                {% if form.telegram.errors %}
+                    <p class="field-error">{{ form.telegram.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_note">Примечание</label>
+                {{ form.note }}
+                {% if form.note.errors %}
+                    <p class="field-error">{{ form.note.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
