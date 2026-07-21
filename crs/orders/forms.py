@@ -8,6 +8,7 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ['client', 'amount', 'note']
         widgets = {
+            'client': forms.HiddenInput(),
             'amount': forms.NumberInput(attrs={
                 'autocomplete': 'off',
             }),

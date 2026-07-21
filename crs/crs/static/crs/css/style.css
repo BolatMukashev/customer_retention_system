@@ -454,45 +454,54 @@ h1 {
     width: 100%;
 }
 
-/* Select2 — привести к стилю инпутов формы */
-.select2-container--default .select2-selection--single {
-    display: flex;
-    align-items: center;
-    height: 42px;
-    padding: 0 36px 0 12px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
+/* Автокомплит клиента (одно поле, без второго инпута) */
+.client-autocomplete {
+    position: relative;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
+.client-suggestions {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--color-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-hover);
+    max-height: 240px;
+    overflow-y: auto;
+    z-index: 20;
+}
+
+.client-suggestion {
+    padding: 10px 12px;
+    font-size: 0.9375rem;
     color: var(--color-neutral);
-    line-height: normal;
-    padding: 0;
+    cursor: pointer;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 100%;
-    top: 0;
-    right: 6px;
+.client-suggestion:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
 }
 
-.select2-container--default.select2-container--focus .select2-selection--single,
-.select2-container--default.select2-container--open .select2-selection--single {
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-}
-
-.select2-dropdown {
-    border-color: var(--color-border);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-hover);
-}
-
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
+.client-suggestion:hover,
+.client-suggestion.is-active {
     background: var(--color-accent);
+    color: var(--color-primary);
+}
+
+.client-suggestion-empty {
+    color: var(--color-muted);
+    cursor: default;
+}
+
+.client-suggestion-empty:hover {
+    background: none;
+    color: var(--color-muted);
 }
 
 /* ==========================================================================

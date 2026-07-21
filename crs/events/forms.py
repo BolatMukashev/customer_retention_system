@@ -8,6 +8,7 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = ['client', 'person_name', 'relation', 'event_type', 'event_date']
         widgets = {
+            'client': forms.HiddenInput(),
             'person_name': forms.TextInput(attrs={
                 'autocomplete': 'new-password',
                 'autocorrect': 'off',
