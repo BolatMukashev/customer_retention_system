@@ -9,10 +9,24 @@ class Client(models.Model):
         message="Введите номер телефона в корректном формате"
     )
 
+    telegram_validator = RegexValidator(
+        regex=r'^@?[a-zA-Z]\w{4,31}$',
+        message="Введите корректный юзернейм Telegram (5-32 символа: латиница, цифры, подчёркивание, начинается с буквы)"
+    )
+
     id = models.BigAutoField(primary_key=True)
 
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='clients')
-    phone = models.CharField(verbose_name="Телефон", max_length=15, validators=[phone_validator])
+    
+    phone = models.CharField(verbose_name="Телефон",
+                             max_length=15,
+                             validators=[phone_validator])
+    
+    telegram = models.CharField(verbose_name="Телеграм",
+                                max_length=32,
+                                blank=True,
+                                validators=[telegram_validator])
+    
     name = models.CharField(verbose_name="Имя", max_length=100)
     note = models.TextField(verbose_name="Примечание", blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан")

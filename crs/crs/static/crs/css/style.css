@@ -241,6 +241,35 @@ h1 {
 }
 
 /* ==========================================================================
+   Telegram button
+   ========================================================================== */
+
+.telegram-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 10px 16px;
+    background: #2AABEE;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s ease-out, box-shadow 0.2s ease-out, transform 0.15s ease-out;
+}
+
+.telegram-btn:hover {
+    background: #1e96d1; /* ~8% darken */
+    box-shadow: var(--shadow-hover);
+}
+
+.telegram-btn:active {
+    transform: translateY(1px);
+}
+
+/* ==========================================================================
    Navigation
    ========================================================================== */
 .navbar {
