@@ -4,6 +4,7 @@ from .models import Client
 from .forms import ClientForm
 from events.models import Event
 from orders.models import Order
+from django.db import IntegrityError
 
 
 @login_required
@@ -26,11 +27,18 @@ def view(request, pk):
 def add(request):
     if request.method == "POST":
         form = ClientForm(request.POST)
+        # Важно: организация должна быть на инстансе ДО is_valid(),
+        # иначе Django не сможет проверить уникальность (organization, phone)
+        form.instance.organization = request.user.organization
         if form.is_valid():
-            client = form.save(commit=False)
-            client.organization = request.user.organization
-            client.save()
-            return redirect("clients:index")
+            try:
+                client = form.save(commit=False)
+                client.organization = request.user.organization
+                client.save()
+                return redirect("clients:index")
+            except IntegrityError:
+                # Подстраховка на случай гонки запросов (race condition)
+                form.add_error("phone", "Клиент с таким номером телефона уже существует")
     else:
         form = ClientForm()
 
@@ -47,8 +55,11 @@ def edit(request, pk):
     if request.method == "POST":
         form = ClientForm(request.POST, instance=client)
         if form.is_valid():
-            form.save()
-            return redirect("clients:client_view", pk=client.pk)
+            try:
+                form.save()
+                return redirect("clients:client_view", pk=client.pk)
+            except IntegrityError:
+                form.add_error("phone", "Клиент с таким номером телефона уже существует")
     else:
         form = ClientForm(instance=client)
 
