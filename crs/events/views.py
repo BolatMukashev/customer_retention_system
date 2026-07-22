@@ -12,11 +12,24 @@ def index(request):
     today = timezone.localdate()
     end_date = today + timedelta(days=3)
 
-    events = Event.objects.filter(event_date__gte=today,
-                                  event_date__lte=end_date,
-                                  organization=org)
+    # event_date хранит дату первого события (например, реальный год рождения),
+    # поэтому фильтровать «предстоящее» напрямую по event_date нельзя —
+    # 1990-07-25 всегда меньше today, сколько бы ни было сегодня.
+    # next_occurrence — вычисляемое свойство (день+месяц из event_date,
+    # год — текущий или следующий), сравнивать его нужно в Python.
+    all_events = Event.objects.filter(organization=org)
+    events = sorted(
+        (e for e in all_events if today <= e.next_occurrence <= end_date),
+        key=lambda e: e.next_occurrence,
+    )
 
-    return render(request, 'events/index.html', {'events': events, "org": org})
+    recent_events = Event.objects.filter(organization=org).order_by('-created_at')[:6]
+
+    return render(request, 'events/index.html', {
+        'events': events,
+        'recent_events': recent_events,
+        'org': org,
+    })
 
 
 @login_required

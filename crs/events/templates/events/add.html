@@ -55,7 +55,13 @@
             </div>
 
             <div class="form-group">
-                <label for="id_event_date">Дата события</label>
+                <label>Дата события</label>
+                <div class="wheel-date-picker" data-date-input="id_event_date">
+                    <div class="wheel-col" data-role="day"></div>
+                    <div class="wheel-col" data-role="month"></div>
+                    <div class="wheel-col" data-role="year"></div>
+                    <div class="wheel-highlight"></div>
+                </div>
                 {{ form.event_date }}
                 {% if form.event_date.errors %}
                     <p class="field-error">{{ form.event_date.errors.0 }}</p>
@@ -70,4 +76,5 @@
 </div>
 
 <script src="{% static 'crs/js/client-autocomplete.js' %}"></script>
+<script src="{% static 'crs/js/date_linear.js' %}"></script>
 {% endblock %}
