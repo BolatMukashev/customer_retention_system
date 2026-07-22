@@ -5,6 +5,11 @@ from .forms import ClientForm
 from events.models import Event
 from orders.models import Order
 from django.db import IntegrityError
+import re
+from django.urls import reverse
+from django.http import JsonResponse
+from django.db.models import Q
+from events.templatetags.event_extras import format_phone
 
 
 @login_required
@@ -67,3 +72,28 @@ def edit(request, pk):
         "form": form,
         "client": client,
     })
+
+
+@login_required
+def search(request):
+    org = request.user.organization
+    query = request.GET.get('q', '').strip()
+    results = []
+
+    if len(query) >= 2:
+        digits = re.sub(r'\D', '', query)
+        filters = Q(name__icontains=query) | Q(telegram__icontains=query)
+        if digits:
+            filters |= Q(phone__icontains=digits)
+
+        clients = Client.objects.filter(organization=org).filter(filters)[:10]
+        results = [
+            {
+                'id': c.pk,
+                'text': f"{c.name} — {format_phone(c.phone)}",
+                'url': reverse('clients:client_view', args=[c.pk]),
+            }
+            for c in clients
+        ]
+
+    return JsonResponse({'results': results})

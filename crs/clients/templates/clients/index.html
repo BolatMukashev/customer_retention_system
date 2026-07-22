@@ -1,5 +1,7 @@
 {% extends "crs/layout.html" %}
 {% load event_extras %}
+{% load static %}
+
 {% block title %}Клиенты{% endblock %}
 {% block content %}
 <div class="page">
@@ -9,6 +11,12 @@
             <p class="subtitle">Информация о недавно добавленных клиентах</p>
         </div>
         <a href="{% url 'clients:add' %}" class="btn-primary">Добавить нового клиента</a>
+    </div>
+
+    <div class="client-autocomplete" data-search-url="{% url 'clients:search' %}">
+        <input type="text" id="client_search_display" class="search-input"
+               placeholder="Поиск по имени, телефону или telegram" autocomplete="off">
+        <div id="client_search_suggestions" class="client-suggestions"></div>
     </div>
 
     <div class="cards">
@@ -38,4 +46,5 @@
         {% endfor %}
     </div>
 </div>
+<script src="{% static 'clients/js/client-search.js' %}"></script>
 {% endblock %}
