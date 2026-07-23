@@ -787,3 +787,147 @@ button:focus-visible {
     border-color: var(--color-accent);
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
 }
+
+
+/* ==========================================================================
+   Archive page — tabs
+   ========================================================================== */
+.tab-nav {
+    display: inline-flex;
+    gap: 4px;
+    background: var(--color-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 4px;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: inherit;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease-out, color 0.2s ease-out;
+}
+
+.tab-btn:hover {
+    color: var(--color-neutral);
+}
+
+.tab-btn.active {
+    background: var(--color-primary);
+    color: var(--color-neutral);
+    box-shadow: var(--shadow-card);
+}
+
+.tab-count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-muted);
+    background: var(--color-secondary);
+    border-radius: var(--radius-lg);
+    padding: 1px 7px;
+}
+
+.tab-btn.active .tab-count {
+    color: var(--color-accent);
+    background: rgba(0, 123, 255, 0.1);
+}
+
+/* ==========================================================================
+   Archive page — rows
+   ========================================================================== */
+.archive-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.archive-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--color-primary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-card);
+    padding: 14px 18px;
+    transition: box-shadow 0.2s ease-out;
+}
+
+.archive-row:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.archive-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--color-secondary);
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+    font-weight: 700;
+}
+
+.archive-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.archive-title {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-neutral);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.archive-meta {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+}
+
+.archive-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+}
+
+.btn-unarchive {
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .archive-row {
+        flex-wrap: wrap;
+    }
+
+    .archive-date {
+        order: 3;
+        margin-left: 52px;
+    }
+
+    .btn-unarchive {
+        order: 4;
+        margin-left: auto;
+    }
+}
