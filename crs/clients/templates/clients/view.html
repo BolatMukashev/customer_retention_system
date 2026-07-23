@@ -71,13 +71,13 @@
         {% if orders %}
         <div class="row-list">
             {% for o in orders %}
-            <div class="row-item">
+            <a href="{% url 'orders:order_view' o.pk %}?from=client" class="row-item" style="text-decoration:none;color:inherit">
                 <div class="row-main">
                     <span class="row-amount mono">{{ o.amount }} ₸</span>
                     {% if o.note %}<span class="row-note">{{ o.note }}</span>{% endif %}
                 </div>
                 <span class="row-date mono">{{ o.updated_at|date:"d.m.Y" }}</span>
-            </div>
+            </a>
             {% endfor %}
         </div>
         {% else %}
@@ -99,13 +99,13 @@
         {% if events %}
         <div class="row-list">
             {% for e in events %}
-            <div class="row-item">
+            <a href="{% url 'events:event_view' e.pk %}?from=client" class="row-item" style="text-decoration:none;color:inherit">
                 <div class="row-main">
                     <span class="event-badge">{{ e.get_event_type_display }}</span>
                     <span class="row-note">{{ e.person_name }} — {{ e.get_relation_display }}</span>
                 </div>
                 <span class="row-date mono">{{ e.event_date|date:"d.m.Y" }}</span>
-            </div>
+            </a>
             {% endfor %}
         </div>
         {% else %}

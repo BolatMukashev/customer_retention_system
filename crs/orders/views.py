@@ -59,7 +59,7 @@ def client_search(request):
 def view(request, pk):
     org = request.user.organization
     order = get_object_or_404(Order, pk=pk, organization=org)
-    return render(request, "orders/view.html", {"order": order})
+    return render(request, "orders/view.html", {"order": order, "org": org})
 
 
 @login_required
