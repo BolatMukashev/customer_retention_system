@@ -2,9 +2,10 @@ from django.core.validators import RegexValidator
 from django.db import models
 from organizations.models import Organization
 from events.templatetags.event_extras import format_phone
+from accounts.models import BaseModel
 
 
-class Client(models.Model):
+class Client(BaseModel):
     phone_validator = RegexValidator(
         regex=r'^\+?[0-9]{7,15}$',
         message="Введите номер телефона в корректном формате"
@@ -30,8 +31,6 @@ class Client(models.Model):
     
     name = models.CharField(verbose_name="Имя", max_length=100)
     note = models.TextField(verbose_name="Примечание", blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлён")
 
     class Meta:
         verbose_name = 'Клиент'

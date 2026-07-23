@@ -10,7 +10,7 @@ from django.db.models import Q
 def index(request):
     org = request.user.organization
 
-    orders = Order.objects.filter(organization=org)[:12]
+    orders = Order.objects.filter(organization=org, is_archived=False)[:12]
 
     return render(request, "orders/index.html", {
         "orders": orders,

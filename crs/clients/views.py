@@ -15,7 +15,7 @@ from events.templatetags.event_extras import format_phone
 @login_required
 def index(request):
     org = request.user.organization
-    clients = Client.objects.filter(organization=org)[:10]
+    clients = Client.objects.filter(organization=org, is_archived=False)[:10]
     return render(request, 'clients/index.html', {'clients': clients, "org": org})
 
 

@@ -1,5 +1,5 @@
 from datetime import date
-
+from accounts.models import BaseModel
 from django.db import models
 from organizations.models import Organization
 from clients.models import Client
@@ -26,14 +26,13 @@ class RelationType(models.TextChoices):
     FEMALE_FRIEND = 'FEMALE_FRIEND', 'Подруга'
 
 
-class Event(models.Model):
+class Event(BaseModel):
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='events')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='events')
     person_name = models.CharField(verbose_name='Имя', max_length=100)
     relation = models.CharField(verbose_name='Отношение', max_length=50, choices=RelationType.choices)
     event_type = models.CharField(verbose_name='Тип события', max_length=50, choices=EventType.choices)
     event_date = models.DateField(verbose_name='Дата события')
-    created_at = models.DateTimeField(verbose_name='Добавлено', auto_now_add=True)
 
     MILESTONE_AGES = {18, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100}
 

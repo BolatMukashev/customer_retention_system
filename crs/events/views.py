@@ -17,13 +17,13 @@ def index(request):
     # 1990-07-25 всегда меньше today, сколько бы ни было сегодня.
     # next_occurrence — вычисляемое свойство (день+месяц из event_date,
     # год — текущий или следующий), сравнивать его нужно в Python.
-    all_events = Event.objects.filter(organization=org)
+    all_events = Event.objects.filter(organization=org, is_archived=False)
     events = sorted(
         (e for e in all_events if today <= e.next_occurrence <= end_date),
         key=lambda e: e.next_occurrence,
     )
 
-    recent_events = Event.objects.filter(organization=org).order_by('-created_at')[:6]
+    recent_events = Event.objects.filter(organization=org, is_archived=False).order_by('-created_at')[:6]
 
     return render(request, 'events/index.html', {
         'events': events,

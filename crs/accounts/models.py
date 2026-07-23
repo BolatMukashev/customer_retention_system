@@ -6,6 +6,17 @@ from .validators import validate_phone
 from .managers import UserManager
 
 
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлен")
+
+    is_archived = models.BooleanField(default=False, verbose_name="Архивирован")
+    archived_at = models.DateTimeField(null=True, blank=True, verbose_name="Дата архивации")
+
+    class Meta:
+        abstract = True
+
+
 class User(AbstractUser):
     username = None
     email = None

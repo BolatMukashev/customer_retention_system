@@ -1,16 +1,15 @@
 from django.db import models
 from organizations.models import Organization
 from clients.models import Client
+from accounts.models import BaseModel
 
 
-class Order(models.Model):
+class Order(BaseModel):
     id = models.BigAutoField(primary_key=True)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='orders')
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name='orders')
     amount = models.PositiveIntegerField(verbose_name="Сумма")
     note = models.TextField(verbose_name="Примечание", blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создан")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Обновлён")
 
     class Meta:
         verbose_name = 'Заказ'
