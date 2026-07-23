@@ -17,11 +17,28 @@
         <div>
             <h1>{{ client.name }}</h1>
             <p class="subtitle">Клиент с {{ client.created_at|date:"d.m.Y" }}</p>
+            {% if client.is_archived %}
+            <span class="badge badge-archived">Архивирован</span>
+            {% endif %}
         </div>
         <a href="{% url 'clients:edit' client.pk %}" class="btn btn-primary">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
             Редактировать
         </a>
+        {% if client.is_archived %}
+        <form method="post" action="{% url 'archive:unarchive_client' client.pk %}" style="display:inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Разархивировать</button>
+        </form>
+        {% else %}
+        <form method="post" action="{% url 'clients:archive' client.pk %}" style="display:inline" onsubmit="return confirm('Архивировать клиента?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-archive">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+                Архивировать
+            </button>
+        </form>
+        {% endif %}
     </div>
 
     <!-- Профиль -->

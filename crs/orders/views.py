@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
+from django.utils import timezone
 from .models import Order
 from .forms import OrderForm
 from clients.models import Client
@@ -10,7 +12,9 @@ from django.db.models import Q
 def index(request):
     org = request.user.organization
 
-    orders = Order.objects.filter(organization=org, is_archived=False)[:12]
+    orders = Order.objects.filter(organization=org,
+                                  is_archived=False,
+                                  client__is_archived=False)[:12]
 
     return render(request, "orders/index.html", {
         "orders": orders,
@@ -76,3 +80,14 @@ def edit(request, pk):
         form = OrderForm(instance=order, organization=org)
 
     return render(request, "orders/edit.html", {"form": form, "order": order})
+
+
+@require_POST
+@login_required
+def archive(request, pk):
+    org = request.user.organization
+    order = get_object_or_404(Order, pk=pk, organization=org)
+    order.is_archived = True
+    order.archived_at = timezone.now()
+    order.save(update_fields=['is_archived', 'archived_at'])
+    return redirect('orders:index')

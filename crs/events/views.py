@@ -1,6 +1,7 @@
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 from django.utils import timezone
 from .models import Event
 from .forms import EventForm
@@ -17,13 +18,17 @@ def index(request):
     # 1990-07-25 всегда меньше today, сколько бы ни было сегодня.
     # next_occurrence — вычисляемое свойство (день+месяц из event_date,
     # год — текущий или следующий), сравнивать его нужно в Python.
-    all_events = Event.objects.filter(organization=org, is_archived=False)
+    all_events = Event.objects.filter(organization=org,
+                                      is_archived=False,
+                                      client__is_archived=False)
     events = sorted(
         (e for e in all_events if today <= e.next_occurrence <= end_date),
         key=lambda e: e.next_occurrence,
     )
 
-    recent_events = Event.objects.filter(organization=org, is_archived=False).order_by('-created_at')[:6]
+    recent_events = Event.objects.filter(organization=org,
+                                         is_archived=False,
+                                         client__is_archived=False).order_by('-created_at')[:6]
 
     return render(request, 'events/index.html', {
         'events': events,
@@ -70,4 +75,15 @@ def edit(request, pk):
         form = EventForm(instance=event, organization=org)
 
     return render(request, "events/edit.html", {"form": form, "event": event})
+
+
+@require_POST
+@login_required
+def archive(request, pk):
+    org = request.user.organization
+    event = get_object_or_404(Event, pk=pk, organization=org)
+    event.is_archived = True
+    event.archived_at = timezone.now()
+    event.save(update_fields=['is_archived', 'archived_at'])
+    return redirect('events:index')
 

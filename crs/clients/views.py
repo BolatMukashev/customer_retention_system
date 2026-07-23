@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 from .models import Client
 from .forms import ClientForm
 from events.models import Event
@@ -10,6 +11,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.db.models import Q
 from events.templatetags.event_extras import format_phone
+from django.views.decorators.http import require_POST
 
 
 @login_required
@@ -97,3 +99,14 @@ def search(request):
         ]
 
     return JsonResponse({'results': results})
+
+
+@require_POST
+@login_required
+def archive(request, pk):
+    org = request.user.organization
+    client = get_object_or_404(Client, pk=pk, organization=org)
+    client.is_archived = True
+    client.archived_at = timezone.now()
+    client.save(update_fields=['is_archived', 'archived_at'])
+    return redirect('clients:index')

@@ -93,6 +93,16 @@
     transform: translateY(-1px);
 }
 
+.btn-archive {
+    background: transparent;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+}
+
+.btn-archive:hover {
+    background: #fef2f2;
+}
+
 /* Profile card */
 .profile-card {
     display: flex;
