@@ -29,4 +29,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('archive/', include('archive.urls', namespace='archive')),
+    path('settings/', include('settings.urls', namespace='settings')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

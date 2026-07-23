@@ -18,16 +18,60 @@
 
     {% if request.user.is_authenticated %}
         <div class="nav-account">
-            <span class="nav-user">{{ request.user.phone }}</span>
-            <form method="post" action="{% url 'accounts:logout' %}" class="nav-logout-form">
-                {% csrf_token %}
-                <button type="submit" class="nav-logout-btn">Выйти</button>
-            </form>
+            <div class="nav-user-menu">
+                <button type="button" class="nav-user" id="nav-user-trigger">
+                    {{ request.user.phone }}
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="nav-user-dropdown" id="nav-user-dropdown">
+                    <a href="{% url 'archive:index' %}" class="nav-dropdown-item">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v13H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+                        Архив
+                    </a>
+                    <a href="{% url 'settings:index' %}" class="nav-dropdown-item">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        Настройки
+                    </a>
+                    <div class="nav-dropdown-divider"></div>
+                    <form method="post" action="{% url 'accounts:logout' %}" class="nav-dropdown-item-form">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-dropdown-item nav-dropdown-item--danger">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                            Выйти
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     {% endif %}
     </nav>
 
     {% block content %}
     {% endblock %}
+
+    <script>
+    (function () {
+        var trigger = document.getElementById('nav-user-trigger');
+        var dropdown = document.getElementById('nav-user-dropdown');
+        if (!trigger || !dropdown) return;
+
+        trigger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('is-open');
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!dropdown.contains(e.target) && e.target !== trigger) {
+                dropdown.classList.remove('is-open');
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                dropdown.classList.remove('is-open');
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
