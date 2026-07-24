@@ -1,7 +1,7 @@
 from django.core.validators import RegexValidator
 from django.db import models
-from django.contrib.auth.models import User
 from referrals.models import Referral
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class TariffType(models.TextChoices):
@@ -107,6 +107,12 @@ class Organization(models.Model):
         choices=CurrencyType.choices,
         default=CurrencyType.KZT
     )
+
+    upcoming_event_days = models.PositiveSmallIntegerField(
+        verbose_name="Показывать события за N дней",
+        default=3,
+        validators=[MinValueValidator(1), MaxValueValidator(30)],
+        help_text="За сколько дней до события показывать его на главной странице")
 
     external_id = models.CharField(
         "ID в CRM",

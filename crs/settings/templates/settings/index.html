@@ -1,11 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends "crs/layout.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'clients/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page">
+    <div class="page-head">
+        <div class="page-head-text">
+            <h1>Настройки</h1>
+            <p class="subtitle">Параметры организации «{{ org.name }}»</p>
+        </div>
+    </div>
+
+    <div class="card form-card">
+        <div class="card-header">
+            <span class="client-avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            </span>
+            <span class="client-name">Предстоящие события</span>
+        </div>
+
+        <div class="card-body">
+            <form method="post" class="order-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.upcoming_event_days.id_for_label }}">
+                        {{ form.upcoming_event_days.label }}
+                    </label>
+                    {{ form.upcoming_event_days }}
+                    <p class="form-hint">За сколько дней до события показывать его на главной странице.</p>
+                    {% if form.upcoming_event_days.errors %}
+                    <p class="field-error">{{ form.upcoming_event_days.errors|join:", " }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+                        Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

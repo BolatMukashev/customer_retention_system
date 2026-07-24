@@ -466,6 +466,15 @@ h1 {
     font-size: 0.8125rem;
 }
 
+.form-hint {
+    color: var(--color-muted);
+    font-size: 0.8125rem;
+}
+
+.form-group input[type="number"] {
+    max-width: 140px;
+}
+
 .form-actions {
     margin-top: 4px;
 }
