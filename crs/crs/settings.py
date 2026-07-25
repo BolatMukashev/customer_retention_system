@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'settings',
     'referrals',
     'archive',
+    'pay',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

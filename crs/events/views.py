@@ -11,6 +11,10 @@ from .forms import EventForm
 def index(request):
     org = request.user.organization
     today = timezone.localdate()
+
+    if org.last_payment_date is None or (timezone.now() - org.last_payment_date) > timedelta(days=365):
+        return redirect('pay:index')
+    
     end_date = today + timedelta(days=org.upcoming_event_days)
 
     # event_date хранит дату первого события (например, реальный год рождения),

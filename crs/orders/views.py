@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+from datetime import timedelta
 from .models import Order
 from .forms import OrderForm
 from clients.models import Client
@@ -11,6 +12,9 @@ from django.db.models import Q
 @login_required
 def index(request):
     org = request.user.organization
+    
+    if org.last_payment_date is None or (timezone.now() - org.last_payment_date) > timedelta(days=365):
+        return redirect('pay:index')
 
     orders = Order.objects.filter(organization=org,
                                   is_archived=False,
