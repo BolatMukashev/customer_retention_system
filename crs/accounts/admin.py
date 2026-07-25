@@ -19,6 +19,8 @@ class UserAdmin(BaseUserAdmin):
         "is_superuser",
     )
 
+    list_display_links = ('id', 'phone')
+
     list_filter = (
         "is_active",
         "is_staff",
