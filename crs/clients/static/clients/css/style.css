@@ -1,25 +1,38 @@
 /* ==========================================================
    Client detail page
-   Built from design.md — Minimalismo Funcional B2B
-   Tokens: primary #FFFFFF, secondary #F8F8F8, tertiary #007BFF,
-   neutral #212529, surface #28A745, accent #FFC107,
-   muted #6C757D, error #DC3545. Base radius 4px, spacing unit 8px.
+   Revento design system — тёплый редакционный стиль
+   Тёмно-синий + коралл + Fraunces italic
    ========================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 .client-page {
-    --border: rgba(33, 37, 41, 0.08);
-    --text: #212529;
-    --text-muted: #6C757D;
-    --bg-page: #F8F8F8;
-    --bg-card: #FFFFFF;
-    --accent: #007BFF;
-    --radius-sm: 4px;
-    --radius-md: 8px;
+    --border: #DFE2EC;         /* --line */
+    --border-strong: #C6CBDD;  /* --line-strong */
+    --text: #1B2340;           /* --ink */
+    --text-muted: #4A5178;     /* --ink-soft */
+    --bg-page: #F5F6FA;        /* --paper */
+    --bg-card: #FFFFFF;        /* --paper-alt */
+    --accent: #FF6B54;         /* --coral */
+    --accent-dark: #E5523C;    /* --coral-dark */
+    --accent-bg: #FFF1EE;      /* --coral-bg */
+    --gold: #E8A33D;
+    --gold-bg: #FDF2E0;
+    --danger: #C0392B;
+    --danger-bg: rgba(192, 57, 43, 0.1);
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --shadow-card: 0 6px 18px rgba(27, 35, 64, 0.08);
+    --shadow-hover: 0 10px 26px rgba(27, 35, 64, 0.13);
+    --shadow-accent: 0 6px 18px rgba(255, 107, 84, 0.28);
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+    --ease: cubic-bezier(.22, .61, .36, 1);
     max-width: 760px;
 }
 
 .client-page .mono {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-family: var(--font-mono);
     font-size: 0.875rem;
 }
 
@@ -29,15 +42,15 @@
     align-items: center;
     gap: 6px;
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-muted);
     text-decoration: none;
     margin-bottom: 16px;
-    transition: color 200ms ease-out;
+    transition: color 0.18s var(--ease);
 }
 
 .back-link:hover {
-    color: var(--text);
+    color: var(--accent-dark);
 }
 
 /* Header */
@@ -50,9 +63,10 @@
 }
 
 .page-head--split h1 {
-    font-family: Inter, sans-serif;
-    font-size: 2.25rem;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 2.125rem;
+    font-weight: 600;
+    letter-spacing: -0.4px;
     color: var(--text);
     margin: 0 0 4px;
 }
@@ -68,39 +82,43 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 16px;
+    padding: 12px 20px;
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
     border: none;
-    transition: background-color 200ms ease-out, box-shadow 200ms ease-out, transform 100ms ease-out;
+    transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease),
+                color 0.18s var(--ease), box-shadow 0.18s var(--ease), transform 0.18s var(--ease);
 }
 
 .btn-primary {
     background-color: var(--accent);
     color: #FFFFFF;
+    box-shadow: var(--shadow-accent);
 }
 
 .btn-primary:hover {
-    background-color: #0069d9; /* ~8% darken of #007BFF */
-    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.24);
+    background-color: var(--accent-dark);
+    box-shadow: 0 10px 22px rgba(229, 82, 60, 0.32);
+    transform: translateY(-2px);
 }
 
 .btn-primary:active {
-    transform: translateY(-1px);
+    transform: translateY(0);
 }
 
 .btn-archive {
     background: transparent;
-    color: #ef4444;
-    border: 1px solid #ef4444;
+    color: var(--danger);
+    border: 1.5px solid var(--border-strong);
 }
 
 .btn-archive:hover {
-    background: #fef2f2;
+    background: var(--danger-bg);
+    border-color: var(--danger);
 }
 
 /* Profile card */
@@ -108,11 +126,11 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    padding: 24px;
+    padding: 28px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
     margin-bottom: 40px;
 }
 
@@ -124,17 +142,17 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(0, 123, 255, 0.08);
-    color: var(--accent);
-    font-family: Inter, sans-serif;
-    font-size: 1.25rem;
-    font-weight: 700;
+    background: var(--accent-bg);
+    color: var(--accent-dark);
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
 }
 
 .profile-info {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     flex: 1;
     min-width: 0;
 }
@@ -153,15 +171,14 @@
 }
 
 .profile-row a {
-    color: var(--text);
+    color: var(--accent-dark);
     text-decoration: none;
     border-bottom: 1px solid transparent;
-    transition: color 200ms ease-out, border-color 200ms ease-out;
+    transition: border-color 0.18s var(--ease);
 }
 
 .profile-row a:hover {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
+    border-bottom-color: var(--accent-dark);
 }
 
 .profile-row--note {
@@ -187,13 +204,18 @@
 }
 
 .stat-value {
-    font-size: 1.125rem;
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
     color: var(--text);
 }
 
 .stat-label {
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     color: var(--text-muted);
 }
 
@@ -210,22 +232,24 @@
 }
 
 .section-head h2 {
-    font-family: Inter, sans-serif;
+    font-family: var(--font-display);
     font-size: 1.125rem;
     font-weight: 600;
+    letter-spacing: -0.2px;
     color: var(--text);
     margin: 0;
 }
 
 .section-count {
+    font-family: var(--font-mono);
     color: var(--text-muted);
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
 }
 
 .row-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .row-item {
@@ -233,15 +257,16 @@
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    padding: 14px 16px;
+    padding: 14px 18px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    transition: box-shadow 200ms ease-out;
+    border-radius: var(--radius-md);
+    transition: box-shadow 0.18s var(--ease), border-color 0.18s var(--ease);
 }
 
 .row-item:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--border-strong);
 }
 
 .row-main {
@@ -252,7 +277,8 @@
 }
 
 .row-amount {
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-weight: 600;
     color: var(--text);
 }
 
@@ -266,6 +292,7 @@
 
 .row-date {
     flex-shrink: 0;
+    font-family: var(--font-mono);
     font-size: 0.8125rem;
     color: var(--text-muted);
 }
@@ -273,12 +300,15 @@
 .event-badge {
     display: inline-flex;
     align-items: center;
-    padding: 3px 10px;
-    border-radius: var(--radius-sm);
-    background: rgba(0, 123, 255, 0.08);
-    color: var(--accent);
-    font-size: 0.75rem;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--accent-bg);
+    color: var(--accent-dark);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
     font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
     white-space: nowrap;
 }
 
@@ -292,17 +322,18 @@
     gap: 6px;
     padding: 40px 24px;
     background: var(--bg-card);
-    border: 1px dashed var(--border);
-    border-radius: var(--radius-sm);
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--radius-md);
     color: var(--text-muted);
 }
 
 .empty-state svg {
     margin-bottom: 6px;
-    color: var(--text-muted);
+    color: var(--border-strong);
 }
 
 .empty-title {
+    font-family: var(--font-display);
     font-weight: 600;
     color: var(--text);
     margin: 0;
