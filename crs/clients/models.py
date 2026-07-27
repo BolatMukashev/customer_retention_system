@@ -31,6 +31,8 @@ class Client(BaseModel):
     
     name = models.CharField(verbose_name="Имя", max_length=100)
     note = models.TextField(verbose_name="Примечание", blank=True)
+    notified = models.BooleanField(verbose_name="Анкета отправлена", default=False)
+
 
     class Meta:
         verbose_name = 'Клиент'

@@ -115,3 +115,13 @@ def archive(request, pk):
     client.archived_at = timezone.now()
     client.save(update_fields=['is_archived', 'archived_at'])
     return redirect('clients:index')
+
+
+@require_POST
+@login_required
+def toggle_notified(request, pk):
+    org = request.user.organization
+    client = get_object_or_404(Client, pk=pk, organization=org)
+    client.notified = not client.notified
+    client.save(update_fields=['notified'])
+    return JsonResponse({'notified': client.notified})

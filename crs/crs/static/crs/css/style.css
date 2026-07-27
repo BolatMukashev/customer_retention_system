@@ -1127,3 +1127,22 @@ button:focus-visible {
     background: var(--line);
     margin: 6px 4px;
 }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notify-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #C6CBDD; /* серый — не отправлено */
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.notify-dot--on {
+    background: #2ECC71; /* зелёный — отправлено */
+}

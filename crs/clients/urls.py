@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:pk>/edit/', views.edit, name='edit'),
     path('<int:pk>/archive/', views.archive, name='archive'),
     path('search/', views.search, name='search'),
+    path('<int:pk>/toggle-notified/', views.toggle_notified, name='toggle_notified'),
 ]
