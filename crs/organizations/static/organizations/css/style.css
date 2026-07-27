@@ -1,0 +1,332 @@
+/* ==========================================================================
+   Revento — organizations app
+   Стили страниц заявки на подключение (форма + экран успеха).
+   Самодостаточный файл: не зависит от main/css/style.css.
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root {
+    /* Цвета */
+    --ink: #1B2340;
+    --ink-soft: #4A5178;
+    --paper: #F5F6FA;
+    --paper-alt: #FFFFFF;
+    --coral: #FF6B54;
+    --coral-dark: #E5523C;
+    --gold: #E8A33D;
+    --line: #DFE2EC;
+    --line-strong: #C6CBDD;
+
+    /* Подложки иконок */
+    --coral-bg: #FFF1EE;
+    --gold-bg: #FDF2E0;
+    --ink-bg: #ECEDF6;
+
+    /* Служебные состояния */
+    --danger: #C0392B;
+    --danger-bg: rgba(192, 57, 43, 0.1);
+
+    /* Радиусы */
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 18px;
+    --radius-pill: 999px;
+
+    /* Тени */
+    --shadow-card: 0 6px 18px rgba(27, 35, 64, 0.08);
+    --shadow-hover: 0 10px 26px rgba(27, 35, 64, 0.13);
+    --shadow-coral: 0 6px 18px rgba(255, 107, 84, 0.28);
+
+    /* Типографика */
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+
+    /* Движение */
+    --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body.organizations {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   Container / Header / Footer
+   ========================================================================== */
+.organizations .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.organizations .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+}
+
+.organizations .header-inner {
+    display: flex;
+    align-items: center;
+    height: 72px;
+}
+
+.organizations .logo {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.375rem;
+    letter-spacing: -0.3px;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.organizations .logo span {
+    color: var(--coral);
+}
+
+.organizations .footer {
+    background: var(--ink);
+    color: rgba(245, 246, 250, .62);
+    padding: 40px 0;
+}
+
+.organizations .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.organizations .footer-logo {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #fff;
+}
+
+.organizations .footer-logo span {
+    color: var(--coral);
+}
+
+.organizations .footer-inner p {
+    font-size: 0.8125rem;
+}
+
+/* ==========================================================================
+   Page
+   ========================================================================== */
+.organizations .page {
+    flex: 1;
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(2rem, 5vw, 4rem) 1.5rem;
+}
+
+.organizations .page-head-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.organizations h1 {
+    font-family: var(--font-display);
+    font-size: 2.125rem;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    color: var(--ink);
+}
+
+.organizations .subtitle {
+    color: var(--ink-soft);
+    font-size: 1rem;
+}
+
+.organizations .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    transition: color 0.18s var(--ease), gap 0.18s var(--ease);
+}
+
+.organizations .back-link:hover {
+    color: var(--coral-dark);
+}
+
+/* ==========================================================================
+   Card
+   ========================================================================== */
+.organizations .card {
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+}
+
+.organizations .form-card {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+/* ==========================================================================
+   Form
+   ========================================================================== */
+.organizations .order-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.organizations .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.organizations .form-group label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+}
+
+.organizations .form-group input[type="text"],
+.organizations .form-group input[type="number"],
+.organizations .form-group input[type="tel"],
+.organizations .form-group textarea,
+.organizations .form-group select {
+    font: inherit;
+    font-size: 0.9375rem;
+    color: var(--ink);
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    width: 100%;
+    transition: border-color 0.18s var(--ease), box-shadow 0.18s var(--ease);
+}
+
+.organizations .form-group input:hover,
+.organizations .form-group textarea:hover,
+.organizations .form-group select:hover {
+    border-color: var(--line-strong);
+}
+
+.organizations .form-group input:focus,
+.organizations .form-group textarea:focus,
+.organizations .form-group select:focus {
+    outline: none;
+    border-color: var(--coral);
+    box-shadow: 0 0 0 3px rgba(255, 107, 84, 0.16);
+}
+
+.organizations .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.organizations .form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234A5178' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 38px;
+    cursor: pointer;
+}
+
+.organizations .field-error {
+    color: var(--danger);
+    font-size: 0.8125rem;
+}
+
+.organizations .form-hint {
+    color: var(--ink-soft);
+    font-size: 0.8125rem;
+}
+
+.organizations .form-actions {
+    margin-top: 4px;
+}
+
+.organizations .form-actions .btn-primary {
+    width: 100%;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.organizations .btn,
+.organizations .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    border: none;
+    transition: background 0.18s var(--ease), box-shadow 0.18s var(--ease), transform 0.18s var(--ease);
+}
+
+.organizations .btn-primary {
+    background: var(--coral);
+    color: var(--paper-alt);
+    box-shadow: var(--shadow-coral);
+}
+
+.organizations .btn-primary:hover {
+    background: var(--coral-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(229, 82, 60, 0.32);
+}
+
+.organizations .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   Motion & accessibility
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .organizations * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+.organizations a:focus-visible,
+.organizations button:focus-visible {
+    outline: 2px solid var(--coral);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}

@@ -23,7 +23,7 @@
             </nav>
             <div class="header-actions">
                 <a href="/accounts/login/" class="btn btn-outline">Войти</a>
-                <a href="#" class="btn btn-primary">Зарегистрироваться</a>
+                <a href="{% url 'organizations:apply' %}" class="btn btn-primary">Зарегистрироваться</a>
             </div>
         </div>
     </header>
@@ -37,7 +37,7 @@
                     Revento запоминает дни рождения и годовщины ваших клиентов. Напомните о себе клиенту в самый нужный момент, пока он не ушёл к конкурентам.
                 </p>
                 <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary btn-lg">Подключить Revento</a>
+                    <a href="{% url 'organizations:apply' %}" class="btn btn-primary btn-lg">Подключить Revento</a>
                     <a href="#how" class="btn btn-ghost-light btn-lg">Как это работает</a>
                 </div>
             </div>
@@ -222,7 +222,7 @@
                     <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Анкетирование клиентов</li>
                     <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Аналитика повторных продаж</li>
                 </ul>
-                <a href="#" class="btn btn-primary btn-block">Зарегистрироваться</a>
+                <a href="{% url 'organizations:apply' %}" class="btn btn-primary btn-block">Зарегистрироваться</a>
             </div>
             <p class="tariff-note" data-reveal>Скоро: Премиум тариф с расширенной аналитикой</p>
         </div>
