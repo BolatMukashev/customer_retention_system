@@ -9,6 +9,14 @@ from clients.models import Client
 from django.db.models import Q
 
 
+DAY_FILTER_OPTIONS = [
+    (1, "За сегодня"),
+    (3, "За 3 дня"),
+    (7, "За неделю"),
+    (30, "За месяц"),
+]
+
+
 @login_required
 def index(request):
     org = request.user.organization
@@ -25,13 +33,29 @@ def index(request):
     if status_filter not in valid_statuses:
         status_filter = None
 
-    orders = base_qs
+    valid_days = {value for value, _ in DAY_FILTER_OPTIONS}
+    try:
+        days_filter = int(request.GET.get('days'))
+    except (TypeError, ValueError):
+        days_filter = None
+    if days_filter not in valid_days:
+        days_filter = None
+
+    days_qs = base_qs
+    if days_filter:
+        since = timezone.now() - timedelta(days=days_filter)
+        days_qs = days_qs.filter(updated_at__gte=since)
+
+    orders = days_qs
     if status_filter:
         orders = orders.filter(status=status_filter)
-    orders = orders[:12]
+
+    # без фильтра по дням показываем последние 12 заказов;
+    # с фильтром по дням — все заказы за выбранный период
+    orders = orders[:200] if days_filter else orders[:12]
 
     status_tabs = [
-        {"value": value, "label": label, "count": base_qs.filter(status=value).count()}
+        {"value": value, "label": label, "count": days_qs.filter(status=value).count()}
         for value, label in StatusType.choices
     ]
 
@@ -40,7 +64,9 @@ def index(request):
         "org": org,
         "status_filter": status_filter,
         "status_tabs": status_tabs,
-        "total_count": base_qs.count(),
+        "total_count": days_qs.count(),
+        "days_filter": days_filter,
+        "day_filter_options": DAY_FILTER_OPTIONS,
     })
 
 

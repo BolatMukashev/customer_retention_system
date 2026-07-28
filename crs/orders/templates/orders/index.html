@@ -10,18 +10,29 @@
     <a href="{% url 'orders:add' %}" class="btn-primary">Добавить заказ</a>
 </div>
 
-    <div class="tab-nav">
-        <a href="{% url 'orders:index' %}" class="tab-btn {% if not status_filter %}active{% endif %}">
-            Все
-            <span class="tab-count">{{ total_count }}</span>
-        </a>
-        {% for tab in status_tabs %}
-        <a href="?status={{ tab.value }}" class="tab-btn {% if status_filter == tab.value %}active{% endif %}">
-            <span class="status-dot status-dot--{{ tab.value|lower }}"></span>
-            {{ tab.label }}
-            <span class="tab-count">{{ tab.count }}</span>
-        </a>
-        {% endfor %}
+    <div class="filters-row">
+        <div class="tab-nav">
+            <a href="{% url 'orders:index' %}{% if days_filter %}?days={{ days_filter }}{% endif %}"
+               class="tab-btn {% if not status_filter %}active{% endif %}">
+                Все
+                <span class="tab-count">{{ total_count }}</span>
+            </a>
+            {% for tab in status_tabs %}
+            <a href="?status={{ tab.value }}{% if days_filter %}&days={{ days_filter }}{% endif %}"
+               class="tab-btn {% if status_filter == tab.value %}active{% endif %}">
+                <span class="status-dot status-dot--{{ tab.value|lower }}"></span>
+                {{ tab.label }}
+                <span class="tab-count">{{ tab.count }}</span>
+            </a>
+            {% endfor %}
+        </div>
+
+        <select id="days-filter" class="days-select" data-status="{{ status_filter|default:'' }}">
+            <option value="" {% if not days_filter %}selected{% endif %}>Последние заказы</option>
+            {% for value, label in day_filter_options %}
+            <option value="{{ value }}" {% if days_filter == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
     </div>
 
     <div class="cards">
@@ -48,9 +59,9 @@
         {% empty %}
         <div class="empty-state">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
-            {% if status_filter %}
-            <p class="empty-title">Заказов с таким статусом нет</p>
-            <p class="empty-text">Попробуйте выбрать другой статус или посмотреть все заказы.</p>
+            {% if status_filter or days_filter %}
+            <p class="empty-title">Заказов не найдено</p>
+            <p class="empty-text">Попробуйте выбрать другой статус или период.</p>
             {% else %}
             <p class="empty-title">Заказов пока нет</p>
             <p class="empty-text">Как только появятся новые заказы, они отобразятся здесь.</p>
@@ -59,4 +70,20 @@
         {% endfor %}
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var select = document.getElementById('days-filter');
+    if (!select) return;
+
+    select.addEventListener('change', function () {
+        var params = new URLSearchParams();
+        var status = select.dataset.status;
+        if (status) params.set('status', status);
+        if (select.value) params.set('days', select.value);
+        var qs = params.toString();
+        window.location.href = window.location.pathname + (qs ? '?' + qs : '');
+    });
+});
+</script>
 {% endblock %}
