@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from datetime import timedelta
-from .models import Order
+from .models import Order, StatusType
 from .forms import OrderForm
 from clients.models import Client
 from django.db.models import Q
@@ -16,13 +16,31 @@ def index(request):
     if org.last_payment_date is None or (timezone.now() - org.last_payment_date) > timedelta(days=365):
         return redirect('pay:index')
 
-    orders = Order.objects.filter(organization=org,
-                                  is_archived=False,
-                                  client__is_archived=False)[:12]
+    base_qs = Order.objects.filter(organization=org,
+                                    is_archived=False,
+                                    client__is_archived=False)
+
+    valid_statuses = dict(StatusType.choices)
+    status_filter = request.GET.get('status')
+    if status_filter not in valid_statuses:
+        status_filter = None
+
+    orders = base_qs
+    if status_filter:
+        orders = orders.filter(status=status_filter)
+    orders = orders[:12]
+
+    status_tabs = [
+        {"value": value, "label": label, "count": base_qs.filter(status=value).count()}
+        for value, label in StatusType.choices
+    ]
 
     return render(request, "orders/index.html", {
         "orders": orders,
         "org": org,
+        "status_filter": status_filter,
+        "status_tabs": status_tabs,
+        "total_count": base_qs.count(),
     })
 
 
@@ -95,3 +113,22 @@ def archive(request, pk):
     order.archived_at = timezone.now()
     order.save(update_fields=['is_archived', 'archived_at'])
     return redirect('orders:index')
+
+
+@require_POST
+@login_required
+def toggle_status(request, pk):
+    org = request.user.organization
+    order = get_object_or_404(Order, pk=pk, organization=org)
+
+    new_status = request.POST.get('status')
+    valid_statuses = dict(StatusType.choices)
+    if new_status not in valid_statuses:
+        return JsonResponse({"error": "invalid status"}, status=400)
+
+    order.status = new_status
+    order.save(update_fields=['status'])
+    return JsonResponse({
+        "status": order.status,
+        "status_display": order.get_status_display(),
+    })

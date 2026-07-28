@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'clients/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'crs/css/style.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -75,8 +75,68 @@
                 <span>{{ order.note }}</span>
             </div>
             {% endif %}
+
+            <div class="profile-row profile-row--status">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+                <div class="status-select"
+                     data-url="{% url 'orders:toggle_status' order.pk %}"
+                     data-csrf="{{ csrf_token }}">
+                    <button type="button"
+                            class="status-option status-option--reserved {% if order.status == 'RESERVED' %}is-active{% endif %}"
+                            data-status="RESERVED">
+                        <span class="status-dot status-dot--reserved"></span>Резерв
+                    </button>
+                    <button type="button"
+                            class="status-option status-option--pre_payment {% if order.status == 'PRE_PAYMENT' %}is-active{% endif %}"
+                            data-status="PRE_PAYMENT">
+                        <span class="status-dot status-dot--pre_payment"></span>Предоплата
+                    </button>
+                    <button type="button"
+                            class="status-option status-option--paid {% if order.status == 'PAID' %}is-active{% endif %}"
+                            data-status="PAID">
+                        <span class="status-dot status-dot--paid"></span>Оплачено
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var wrapper = document.querySelector('.status-select');
+    if (!wrapper) return;
+
+    var url = wrapper.dataset.url;
+    var csrf = wrapper.dataset.csrf;
+
+    wrapper.addEventListener('click', function (e) {
+        var btn = e.target.closest('.status-option');
+        if (!btn || btn.classList.contains('is-active')) return;
+
+        var status = btn.dataset.status;
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrf,
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'status=' + encodeURIComponent(status),
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            if (data.error) return;
+            wrapper.querySelectorAll('.status-option').forEach(function (el) {
+                el.classList.toggle('is-active', el.dataset.status === status);
+            });
+        })
+        .catch(function () {
+            // при ошибке сети просто оставляем как было
+        });
+    });
+});
+</script>
+
 {% endblock %}
