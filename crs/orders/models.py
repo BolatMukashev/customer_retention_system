@@ -6,7 +6,7 @@ from accounts.models import BaseModel
 
 class StatusType(models.TextChoices):
     RESERVED = 'RESERVED', 'Резерв'
-    PRE_PAYMENT = 'PRE_PAYMENT', 'Предоплата'
+    PREPAYMENT = 'PREPAYMENT', 'Предоплата'
     PAID = 'PAID', 'Оплочено'
 
 

@@ -1162,7 +1162,7 @@ button:focus-visible {
     background: var(--line-strong); /* серый — резерв */
 }
 
-.status-dot--pre_payment {
+.status-dot--prepayment {
     background: var(--gold); /* оранжевый — предоплата */
 }
 

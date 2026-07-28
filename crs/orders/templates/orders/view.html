@@ -65,7 +65,7 @@
             {% if order.client.telegram %}
             <div class="profile-row">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3 2 12l6 2 2 6 3-4 5 4 4-17Z"/><path d="M20 4 8.5 14.5"/></svg>
-                <a href="tg://resolve?domain={{ order.client.telegram|cut:"@" }}" class="mono">@{{ order.client.telegram|cut:"@" }}</a>
+                <a href="tg://resolve?domain={{ order.client.telegram|cut:'@' }}" class="mono">@{{ order.client.telegram|cut:'@' }}</a>
             </div>
             {% endif %}
 
@@ -87,9 +87,9 @@
                         <span class="status-dot status-dot--reserved"></span>Резерв
                     </button>
                     <button type="button"
-                            class="status-option status-option--pre_payment {% if order.status == 'PRE_PAYMENT' %}is-active{% endif %}"
-                            data-status="PRE_PAYMENT">
-                        <span class="status-dot status-dot--pre_payment"></span>Предоплата
+                            class="status-option status-option--prepayment {% if order.status == 'PREPAYMENT' %}is-active{% endif %}"
+                            data-status="PREPAYMENT">
+                        <span class="status-dot status-dot--prepayment"></span>Предоплата
                     </button>
                     <button type="button"
                             class="status-option status-option--paid {% if order.status == 'PAID' %}is-active{% endif %}"
@@ -103,40 +103,6 @@
 
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var wrapper = document.querySelector('.status-select');
-    if (!wrapper) return;
-
-    var url = wrapper.dataset.url;
-    var csrf = wrapper.dataset.csrf;
-
-    wrapper.addEventListener('click', function (e) {
-        var btn = e.target.closest('.status-option');
-        if (!btn || btn.classList.contains('is-active')) return;
-
-        var status = btn.dataset.status;
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': csrf,
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'status=' + encodeURIComponent(status),
-        })
-        .then(function (res) { return res.json(); })
-        .then(function (data) {
-            if (data.error) return;
-            wrapper.querySelectorAll('.status-option').forEach(function (el) {
-                el.classList.toggle('is-active', el.dataset.status === status);
-            });
-        })
-        .catch(function () {
-            // при ошибке сети просто оставляем как было
-        });
-    });
-});
-</script>
+<script src="{% static 'orders/js/ev-listener.js' %}"></script>
 
 {% endblock %}
