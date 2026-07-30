@@ -72,7 +72,7 @@
             {% if event.client.telegram %}
             <div class="profile-row">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3 2 12l6 2 2 6 3-4 5 4 4-17Z"/><path d="M20 4 8.5 14.5"/></svg>
-                <a href="tg://resolve?domain={{ event.client.telegram|cut:"@" }}" class="mono">@{{ event.client.telegram|cut:"@" }}</a>
+                <a href="tg://resolve?domain={{ event.client.telegram|cut:'@' }}" class="mono">@{{ event.client.telegram|cut:'@' }}</a>
             </div>
             {% endif %}
 
@@ -90,8 +90,24 @@
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 <span>{{ event.get_relation_display }} {{ event.person_name }}</span>
             </div>
+
+            <div class="profile-row profile-row--notify">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/></svg>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="proposal-toggle"
+                           data-url="{% url 'events:toggle_proposal' event.pk %}"
+                           data-csrf="{{ csrf_token }}"
+                           {% if event.proposal_sent %}checked{% endif %}>
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label" id="proposal-label">
+                    {% if event.proposal_sent %}Предложение отправлено{% else %}Предложение не отправлено{% endif %}
+                </span>
+            </div>
         </div>
     </section>
 
 </div>
+
+<script src="{% static 'events/js/event-view.js' %}"></script>
 {% endblock %}

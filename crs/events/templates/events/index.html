@@ -2,6 +2,21 @@
 {% load event_extras %}
 {% block title %}Главная страница{% endblock %}
 {% block content %}
+<style>
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filter-chip {
+        display: inline-flex; align-items: center;
+        padding: 6px 14px; border-radius: 999px;
+        border: 1px solid #e2e2e2; background: #fff;
+        color: #444; font-size: 13px; text-decoration: none;
+        transition: background .15s, border-color .15s;
+    }
+    .filter-chip:hover { background: #f5f5f5; }
+    .filter-chip--active { border-color: #333; background: #333; color: #fff; }
+    .proposal-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-left: 6px; }
+    .proposal-dot--sent { background: #22c55e; }
+    .proposal-dot--not-sent { background: #9ca3af; }
+</style>
 <div class="page">
     <div class="page-head">
     <div class="page-head-text">
@@ -10,6 +25,16 @@
     </div>
     <a href="{% url 'events:add' %}" class="btn-primary">Добавить событие</a>
 </div>
+
+    <div class="filter-bar">
+        <a href="{% url 'events:index' %}" class="filter-chip{% if not proposal_filter %} filter-chip--active{% endif %}">Все</a>
+        <a href="?proposal=sent" class="filter-chip{% if proposal_filter == 'sent' %} filter-chip--active{% endif %}">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;"></span>Предложение отправлено
+        </a>
+        <a href="?proposal=not_sent" class="filter-chip{% if proposal_filter == 'not_sent' %} filter-chip--active{% endif %}">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#9ca3af;margin-right:6px;"></span>Предложение не отправлено
+        </a>
+    </div>
 
     <div class="cards">
         {% for e in events %}

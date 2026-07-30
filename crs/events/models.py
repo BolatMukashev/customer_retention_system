@@ -24,6 +24,7 @@ class RelationType(models.TextChoices):
     FATHER = 'FATHER', 'Отец'
     FRIEND = 'FRIEND', 'Друг'
     FEMALE_FRIEND = 'FEMALE_FRIEND', 'Подруга'
+    PET = 'PET', 'Питомец'
 
 
 class Event(BaseModel):
@@ -33,6 +34,7 @@ class Event(BaseModel):
     relation = models.CharField(verbose_name='Отношение', max_length=50, choices=RelationType.choices)
     event_type = models.CharField(verbose_name='Тип события', max_length=50, choices=EventType.choices)
     event_date = models.DateField(verbose_name='Дата события')
+    proposal_sent = models.BooleanField(verbose_name='Предложение отправлено', default=False)
 
     MILESTONE_AGES = {18, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100}
 

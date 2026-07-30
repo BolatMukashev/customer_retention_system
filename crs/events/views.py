@@ -1,5 +1,6 @@
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.utils import timezone
@@ -19,9 +20,16 @@ def index(request):
 
     end_date = today + timedelta(days=org.upcoming_event_days)
 
+    proposal_filter = request.GET.get('proposal', '')
+
     all_events = Event.objects.filter(organization=org,
                                       is_archived=False,
                                       client__is_archived=False)
+    if proposal_filter == 'sent':
+        all_events = all_events.filter(proposal_sent=True)
+    elif proposal_filter == 'not_sent':
+        all_events = all_events.filter(proposal_sent=False)
+
     events = sorted(
         (e for e in all_events if today <= e.next_occurrence <= end_date),
         key=lambda e: e.next_occurrence,
@@ -47,6 +55,7 @@ def index(request):
         'events': events,
         'recent_events': recent_events,
         'org': org,
+        'proposal_filter': proposal_filter,
     })
 
 
@@ -89,6 +98,16 @@ def edit(request, pk):
         form = EventForm(instance=event, organization=org)
 
     return render(request, "events/edit.html", {"form": form, "event": event})
+
+
+@require_POST
+@login_required
+def toggle_proposal(request, pk):
+    org = request.user.organization
+    event = get_object_or_404(Event, pk=pk, organization=org)
+    event.proposal_sent = not event.proposal_sent
+    event.save(update_fields=['proposal_sent'])
+    return JsonResponse({'proposal_sent': event.proposal_sent})
 
 
 @require_POST
