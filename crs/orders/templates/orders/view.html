@@ -22,7 +22,7 @@
 
     <div class="page-head page-head--split">
         <div>
-            <h1>{{ order.amount }} {{ org.currency }}</h1>
+            <h1>{{ order.amount|format_money }} {{ org.currency }}</h1>
             <p class="subtitle">{{ order.updated_at|date:"d.m.Y H:i" }}</p>
             {% if order.is_archived %}
             <span class="badge badge-archived">Архивирован</span>

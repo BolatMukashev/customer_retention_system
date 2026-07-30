@@ -2,7 +2,7 @@
    Revento — design tokens
    Тёплый редакционный стиль: тёмно-синий + коралл + Fraunces italic
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
     /* Цвета */
@@ -42,7 +42,7 @@
     /* Типографика */
     --font-display: 'Fraunces', Georgia, serif;
     --font-body: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
+    --font-mono: 'Inter', var(--font-body);
 
     /* Движение */
     --ease: cubic-bezier(.22, .61, .36, 1);
@@ -191,7 +191,7 @@ h1 {
 }
 
 .order-amount {
-    font-family: var(--font-display);
+    font-family: var(--font-mono);
     font-size: 1.625rem;
     font-weight: 600;
     color: var(--ink);
@@ -306,6 +306,10 @@ h1 {
    ========================================================================== */
 .page-head--split {
     align-items: center;
+}
+
+.page-head--split h1 {
+    font-family: var(--font-mono);
 }
 
 /* ==========================================================================
@@ -1235,4 +1239,10 @@ button:focus-visible {
 
 .filters-row .tab-nav {
     margin-bottom: 0;
+}
+
+.client-avg-check {
+    font-size: 0.8125rem;
+    color: var(--text-muted, #4A5178);
+    margin: 4px 0 0;
 }

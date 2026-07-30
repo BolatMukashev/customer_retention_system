@@ -62,6 +62,13 @@
                 <a href="whatsapp://send?phone={{ event.client.phone }}" class="mono">{{ event.client.phone|format_phone }}</a>
             </div>
 
+            {% if avg_check %}
+            <div class="profile-row">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span class="mono">Средний чек: {{ avg_check|format_money }} ₸</span>
+            </div>
+            {% endif %}
+
             {% if event.client.telegram %}
             <div class="profile-row">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3 2 12l6 2 2 6 3-4 5 4 4-17Z"/><path d="M20 4 8.5 14.5"/></svg>
@@ -73,6 +80,7 @@
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
                 <span class="mono">{{ event.event_date|date:"d.m.Y" }}</span>
                 <span class="badge badge-countdown">{% days_until event.event_date %}</span>
+                <span class="badge badge-type">{{ event.get_event_type_display }}</span>
                 {% if event.is_milestone %}
                 <span class="badge badge-milestone">Юбилей — {{ event.turning_age }} лет</span>
                 {% endif %}
@@ -80,7 +88,7 @@
 
             <div class="profile-row">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                <span>{{ event.get_relation_display }}</span>
+                <span>{{ event.get_relation_display }} {{ event.person_name }}</span>
             </div>
         </div>
     </section>

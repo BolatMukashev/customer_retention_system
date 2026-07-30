@@ -56,3 +56,11 @@ def days_until(event_date):
 @register.filter
 def format_phone(value):
     return format_phone_number(value)
+
+
+@register.filter
+def format_money(value):
+    if value is None:
+        return ""
+    value = int(round(float(value)))
+    return f"{value:,}".replace(",", " ")

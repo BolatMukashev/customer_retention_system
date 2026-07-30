@@ -9,7 +9,7 @@ from django.db import IntegrityError
 import re
 from django.urls import reverse
 from django.http import JsonResponse
-from django.db.models import Q
+from django.db.models import Q, Avg
 from events.templatetags.event_extras import format_phone
 from django.views.decorators.http import require_POST
 from datetime import timedelta
@@ -21,8 +21,10 @@ def index(request):
 
     if org.last_payment_date is None or (timezone.now() - org.last_payment_date) > timedelta(days=365):
             return redirect('pay:index')
-    
-    clients = Client.objects.filter(organization=org, is_archived=False)[:10]
+
+    clients = Client.objects.filter(organization=org, is_archived=False).annotate(
+        avg_check=Avg('orders__amount')
+    )[:10]
     return render(request, 'clients/index.html', {'clients': clients, "org": org})
 
 
@@ -32,8 +34,11 @@ def view(request, pk):
     client = get_object_or_404(Client, pk=pk, organization=org)
     events = Event.objects.filter(client=client, organization=org)
     orders = Order.objects.filter(client=client, organization=org)
-    return render(request, 'clients/view.html', {'client': client, "events": events, "orders": orders, "org": org})
-
+    avg_check = orders.aggregate(avg=Avg('amount'))['avg'] or 0
+    return render(request, 'clients/view.html', {
+        'client': client, "events": events, "orders": orders, "org": org,
+        "avg_check": avg_check,
+    })
 
 @login_required
 def add(request):

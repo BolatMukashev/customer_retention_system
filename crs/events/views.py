@@ -3,8 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+from django.db.models import Avg
 from .models import Event
 from .forms import EventForm
+from orders.models import Order
 
 
 @login_required
@@ -14,14 +16,9 @@ def index(request):
 
     if org.last_payment_date is None or (timezone.now() - org.last_payment_date) > timedelta(days=365):
         return redirect('pay:index')
-    
+
     end_date = today + timedelta(days=org.upcoming_event_days)
 
-    # event_date хранит дату первого события (например, реальный год рождения),
-    # поэтому фильтровать «предстоящее» напрямую по event_date нельзя —
-    # 1990-07-25 всегда меньше today, сколько бы ни было сегодня.
-    # next_occurrence — вычисляемое свойство (день+месяц из event_date,
-    # год — текущий или следующий), сравнивать его нужно в Python.
     all_events = Event.objects.filter(organization=org,
                                       is_archived=False,
                                       client__is_archived=False)
@@ -30,9 +27,21 @@ def index(request):
         key=lambda e: e.next_occurrence,
     )
 
-    recent_events = Event.objects.filter(organization=org,
+    recent_events = list(Event.objects.filter(organization=org,
                                          is_archived=False,
-                                         client__is_archived=False).order_by('-created_at')[:6]
+                                         client__is_archived=False).order_by('-created_at')[:6])
+
+    client_ids = {e.client_id for e in events} | {e.client_id for e in recent_events}
+    avg_checks = {
+        row['client_id']: row['avg']
+        for row in Order.objects.filter(organization=org, client_id__in=client_ids)
+                                 .values('client_id')
+                                 .annotate(avg=Avg('amount'))
+    }
+    for e in events:
+        e.avg_check = avg_checks.get(e.client_id)
+    for e in recent_events:
+        e.avg_check = avg_checks.get(e.client_id)
 
     return render(request, 'events/index.html', {
         'events': events,
@@ -62,7 +71,8 @@ def add(request):
 def view(request, pk):
     org = request.user.organization
     event = get_object_or_404(Event, pk=pk, organization=org)
-    return render(request, "events/view.html", {"event": event})
+    avg_check = Order.objects.filter(client=event.client, organization=org).aggregate(avg=Avg('amount'))['avg']
+    return render(request, "events/view.html", {"event": event, "avg_check": avg_check})
 
 
 @login_required
@@ -90,4 +100,3 @@ def archive(request, pk):
     event.archived_at = timezone.now()
     event.save(update_fields=['is_archived', 'archived_at'])
     return redirect('events:index')
-
