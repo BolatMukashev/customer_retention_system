@@ -3,6 +3,7 @@ from django.db import models
 from organizations.models import Organization
 from events.templatetags.event_extras import format_phone
 from accounts.models import BaseModel
+import uuid
 
 
 class Client(BaseModel):
@@ -31,8 +32,17 @@ class Client(BaseModel):
     
     name = models.CharField(verbose_name="Имя", max_length=100)
     note = models.TextField(verbose_name="Примечание", blank=True)
-    notified = models.BooleanField(verbose_name="Анкета отправлена", default=False)
+    reward_received = models.BooleanField(verbose_name="Награда получена", default=False)
 
+    anketa_token = models.UUIDField(
+        verbose_name="Токен анкеты",
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+    )
+
+    anketa_completed_at = models.DateTimeField(verbose_name="Анкета завершена клиентом", null=True, blank=True)
+    notified = models.BooleanField(verbose_name="Анкета отправлена", default=False)
 
     class Meta:
         verbose_name = 'Клиент'

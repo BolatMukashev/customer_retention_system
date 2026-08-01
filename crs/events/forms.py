@@ -32,3 +32,21 @@ class EventForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if organization is not None:
             self.fields['client'].queryset = Client.objects.filter(organization=organization)
+
+
+class AnketaEventForm(forms.ModelForm):
+    event_date = forms.DateField(
+        input_formats=['%d-%m-%Y'],
+        widget=HiddenDateInput(format='%d-%m-%Y'),
+    )
+
+    class Meta:
+        model = Event
+        fields = ['person_name', 'relation', 'event_type', 'event_date']
+        widgets = {
+            'person_name': forms.TextInput(attrs={
+                'autocomplete': 'new-password',
+                'autocorrect': 'off',
+                'spellcheck': 'false',
+            }),
+        }

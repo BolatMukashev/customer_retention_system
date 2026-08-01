@@ -428,3 +428,34 @@
     color: var(--text-muted, #4A5178);
     margin: 4px 0 0;
 }
+
+.icon-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background 0.18s var(--ease), border-color 0.18s var(--ease), color 0.18s var(--ease);
+}
+.icon-copy-btn:hover {
+    border-color: var(--coral);
+    color: var(--coral-dark);
+    background: var(--coral-bg);
+}
+.icon-copy-btn.is-copied {
+    border-color: #2ECC71;
+    color: #2ECC71;
+    background: rgba(46, 204, 113, 0.08);
+}
+.anketa-link {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 260px;
+}

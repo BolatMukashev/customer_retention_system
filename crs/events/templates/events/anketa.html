@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анкета — {{ client.name }}</title>
+    <link rel="stylesheet" href="{% static 'events/css/anketa.css' %}">
+</head>
+<body>
+<div class="anketa-page">
+    <div class="anketa-card">
+
+        <h1 class="anketa-title">Здравствуйте, {{ client.name }}!</h1>
+        <p class="anketa-subtitle">Добавьте важные даты — дни рождения, годовщины, праздники — и получите награду.</p>
+
+        <div class="progress-wrap">
+            <div class="progress-bar">
+                <div class="progress-fill" data-target="{{ progress_percent }}"></div>
+            </div>
+            <div class="progress-labels">
+                {% for step in reward_steps %}
+                <span class="progress-label {% if forloop.counter <= events_count %}reached{% endif %} {% if step.is_super %}super{% endif %}">
+                    {{ step.title }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if is_complete %}
+        <div class="anketa-thanks">
+            <div class="thanks-emoji">🎉</div>
+            <h2>Спасибо, {{ client.name }}!</h2>
+            <p>Анкета заполнена. Добавлено событий: {{ events_count }}. Ваша награда:</p>
+            <p class="thanks-reward">{{ current_reward }}</p>
+            <p class="thanks-note">Покажите эту страницу продавцу, чтобы получить награду.</p>
+        </div>
+        {% else %}
+
+            {% if events_count > 0 %}
+            <div class="anketa-current-reward">
+                {% if max_reward_reached %}
+                    Максимальная награда открыта: <strong>{{ current_reward }}</strong>. Можно добавить ещё события — или завершить анкету.
+                {% else %}
+                    Уже накоплено: <strong>{{ current_reward }}</strong> — ещё {{ steps_left }} событи{{ steps_left|pluralize:"е,я,й" }} до суперприза
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if events %}
+            <div class="anketa-events">
+                <h3>Уже добавлено</h3>
+                <div class="event-list">
+                    {% for e in events %}
+                    <div class="event-item">
+                        <span class="event-badge">{{ e.get_event_type_display }}</span>
+                        <span>{{ e.person_name }} — {{ e.get_relation_display }}</span>
+                        <span class="event-date">{{ e.event_date|date:"d.m.Y" }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <form method="post" class="anketa-form">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <div class="form-row">
+                    <label for="{{ form.person_name.id_for_label }}">Имя</label>
+                    {{ form.person_name }}
+                    {{ form.person_name.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.relation.id_for_label }}">Кем приходится</label>
+                    {{ form.relation }}
+                    {{ form.relation.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.event_type.id_for_label }}">Тип события</label>
+                    {{ form.event_type }}
+                    {{ form.event_type.errors }}
+                </div>
+
+                <div class="form-row">
+                    <label>Дата события</label>
+                    <div class="wheel-date-picker" data-date-input="id_event_date">
+                        <div class="wheel-col" data-role="day"></div>
+                        <div class="wheel-col" data-role="month"></div>
+                        <div class="wheel-col" data-role="year"></div>
+                        <div class="wheel-highlight"></div>
+                    </div>
+                    {{ form.event_date }}
+                    {{ form.event_date.errors }}
+                </div>
+
+                <button type="submit" class="btn-submit">Добавить событие</button>
+            </form>
+
+            {% if events_count > 0 %}
+            <form method="post" class="anketa-finish-form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="finish">
+                <button type="submit" class="btn-finish">Завершить заполнение</button>
+            </form>
+            {% endif %}
+        {% endif %}
+
+    </div>
+</div>
+
+<script src="{% static 'crs/js/date_linear.js' %}"></script>
+<script src="{% static 'events/js/anketa.js' %}"></script>
+</body>
+</html>

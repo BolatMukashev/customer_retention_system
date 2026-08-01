@@ -1,0 +1,240 @@
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(160deg, #f4f1ff 0%, #ffffff 55%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.anketa-page {
+    width: 100%;
+    max-width: 480px;
+}
+
+.anketa-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 10px 40px rgba(80, 60, 160, 0.12);
+}
+
+.anketa-title {
+    margin: 0 0 6px;
+    font-size: 22px;
+    color: #2a2140;
+}
+
+.anketa-subtitle {
+    margin: 0 0 24px;
+    color: #6b6580;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Прогресс-бар */
+.progress-wrap { margin-bottom: 28px; }
+
+.progress-bar {
+    height: 10px;
+    border-radius: 999px;
+    background: #ece9f7;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+    transition: width 0.8s ease;
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    gap: 4px;
+}
+
+.progress-label {
+    font-size: 10px;
+    color: #b3aec4;
+    text-align: center;
+    flex: 1;
+}
+
+.progress-label.reached { color: #7c3aed; font-weight: 600; }
+.progress-label.super.reached { color: #d946ef; }
+
+/* Текущая награда */
+.anketa-current-reward {
+    background: #f5f1ff;
+    color: #6d28d9;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Список добавленных событий */
+.anketa-events { margin-bottom: 24px; }
+
+.anketa-events h3 {
+    font-size: 13px;
+    color: #8a84a0;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.event-list { display: flex; flex-direction: column; gap: 8px; }
+
+.event-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    background: #faf9fd;
+    border-radius: 10px;
+    padding: 8px 12px;
+}
+
+.event-badge {
+    background: #ede9fe;
+    color: #7c3aed;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.event-date { margin-left: auto; color: #9891a8; font-variant-numeric: tabular-nums; }
+
+/* Форма */
+.form-row { margin-bottom: 14px; }
+
+.form-row label {
+    display: block;
+    font-size: 13px;
+    color: #6b6580;
+    margin-bottom: 4px;
+}
+
+.form-row input,
+.form-row select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #e3e0ee;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #fff;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+    outline: none;
+    border-color: #8b5cf6;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #8b5cf6, #d946ef);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.btn-submit:active { transform: scale(0.98); }
+
+/* Финальный экран */
+.anketa-thanks { text-align: center; padding: 12px 0; }
+
+.thanks-emoji { font-size: 48px; margin-bottom: 8px; }
+
+.anketa-thanks h2 { margin: 0 0 8px; color: #2a2140; }
+
+.thanks-reward {
+    font-size: 20px;
+    font-weight: 700;
+    color: #7c3aed;
+    margin: 12px 0;
+}
+
+.thanks-note { color: #8a84a0; font-size: 13px; }
+
+
+.wheel-date-picker {
+    position: relative;
+    display: flex;
+    gap: 4px;
+    height: 160px;
+    padding: 0 4px;
+    background: #fff;
+    border: 1px solid #e3e0ee;
+    border-radius: 10px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 30%, #000 70%, transparent 100%);
+}
+.wheel-col {
+    flex: 1;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 60px 0;
+}
+.wheel-col::-webkit-scrollbar { display: none; }
+.wheel-list { list-style: none; margin: 0; padding: 0; }
+.wheel-item {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    scroll-snap-align: center;
+    color: #b3aec4;
+    font-size: 0.9375rem;
+    font-variant-numeric: tabular-nums;
+    cursor: pointer;
+    transition: color 0.15s ease, font-weight 0.15s ease, font-size 0.15s ease;
+    user-select: none;
+}
+.wheel-item.is-selected { color: #2a2140; font-weight: 700; font-size: 1.0625rem; }
+.wheel-highlight {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 40px;
+    transform: translateY(-50%);
+    border-top: 1.5px solid #8b5cf6;
+    border-bottom: 1.5px solid #8b5cf6;
+    background: rgba(139, 92, 246, 0.06);
+    pointer-events: none;
+}
+
+.anketa-finish-form { margin-top: 10px; }
+
+.btn-finish {
+    width: 100%;
+    padding: 11px;
+    border: 1.5px solid #d8d4e8;
+    border-radius: 12px;
+    background: transparent;
+    color: #6b6580;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-finish:hover {
+    border-color: #8b5cf6;
+    color: #7c3aed;
+}

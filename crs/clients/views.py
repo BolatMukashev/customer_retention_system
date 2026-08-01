@@ -34,10 +34,13 @@ def view(request, pk):
     client = get_object_or_404(Client, pk=pk, organization=org)
     events = Event.objects.filter(client=client, organization=org)
     orders = Order.objects.filter(client=client, organization=org)
+    anketa_url = request.build_absolute_uri(
+        reverse('events:anketa', args=[client.anketa_token])
+    )
     avg_check = orders.aggregate(avg=Avg('amount'))['avg'] or 0
     return render(request, 'clients/view.html', {
         'client': client, "events": events, "orders": orders, "org": org,
-        "avg_check": avg_check,
+        "avg_check": avg_check, "anketa_url": anketa_url,
     })
 
 @login_required

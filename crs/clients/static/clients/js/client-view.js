@@ -19,3 +19,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+document.querySelectorAll('.icon-copy-btn[data-copy]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+            btn.classList.add('is-copied');
+            btn.querySelector('.icon-copy').style.display = 'none';
+            btn.querySelector('.icon-check').style.display = 'block';
+            setTimeout(() => {
+                btn.classList.remove('is-copied');
+                btn.querySelector('.icon-copy').style.display = 'block';
+                btn.querySelector('.icon-check').style.display = 'none';
+            }, 1500);
+        });
+    });
+});
