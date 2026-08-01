@@ -1246,3 +1246,87 @@ button:focus-visible {
     color: var(--text-muted, #4A5178);
     margin: 4px 0 0;
 }
+
+.notify-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #C6CBDD;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.notify-dot--on {
+    background: #2ECC71;
+}
+
+/* Точка статуса предложения — карточка события */
+.proposal-dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-left: 6px;
+    flex-shrink: 0;
+}
+
+.proposal-dot--sent {
+    background: #2ECC71;
+}
+
+.proposal-dot--not-sent {
+    background: var(--line-strong);
+}
+
+/* ==========================================================================
+   Filter bar (используется на index у clients и events)
+   ========================================================================== */
+.filter-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line);
+    background: var(--paper-alt);
+    color: var(--ink-soft);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.18s var(--ease), border-color 0.18s var(--ease), color 0.18s var(--ease);
+}
+
+.filter-chip:hover {
+    border-color: var(--line-strong);
+    background: var(--paper);
+}
+
+.filter-chip--active {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: #fff;
+}
+
+.filter-chip--active:hover {
+    background: #2A3355;
+    border-color: #2A3355;
+}
+
+.filter-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--line-strong);
+    margin-right: 6px;
+}
+
+.filter-dot--on {
+    background: #2ECC71;
+}

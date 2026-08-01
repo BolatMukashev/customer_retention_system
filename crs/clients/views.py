@@ -20,12 +20,23 @@ def index(request):
     org = request.user.organization
 
     if org.last_payment_date is None or (timezone.now() - org.last_payment_date) > timedelta(days=365):
-            return redirect('pay:index')
+        return redirect('pay:index')
 
-    clients = Client.objects.filter(organization=org, is_archived=False).annotate(
-        avg_check=Avg('orders__amount')
-    )[:10]
-    return render(request, 'clients/index.html', {'clients': clients, "org": org})
+    notified_filter = request.GET.get('notified', '')
+
+    clients = Client.objects.filter(organization=org, is_archived=False)
+    if notified_filter == 'sent':
+        clients = clients.filter(notified=True)
+    elif notified_filter == 'not_sent':
+        clients = clients.filter(notified=False)
+
+    clients = clients.annotate(avg_check=Avg('orders__amount'))[:10]
+
+    return render(request, 'clients/index.html', {
+        'clients': clients,
+        'org': org,
+        'notified_filter': notified_filter,
+    })
 
 
 @login_required

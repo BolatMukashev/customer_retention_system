@@ -19,6 +19,16 @@
         <div id="client_search_suggestions" class="client-suggestions"></div>
     </div>
 
+    <div class="filter-bar">
+        <a href="{% url 'clients:index' %}" class="filter-chip{% if not notified_filter %} filter-chip--active{% endif %}">Все</a>
+        <a href="?notified=sent" class="filter-chip{% if notified_filter == 'sent' %} filter-chip--active{% endif %}">
+            <span class="filter-dot filter-dot--on"></span>Анкета отправлена
+        </a>
+        <a href="?notified=not_sent" class="filter-chip{% if notified_filter == 'not_sent' %} filter-chip--active{% endif %}">
+            <span class="filter-dot"></span>Анкета не отправлена
+        </a>
+    </div>
+
     <div class="cards">
         {% for e in clients %}
         <a href="{% url 'clients:client_view' e.pk %}" class="card-link">
