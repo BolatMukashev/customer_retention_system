@@ -1,21 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('notified-toggle');
-    const label = document.getElementById('notified-label');
+    document.querySelectorAll('.toggle-switch input[data-url]').forEach(function (toggle) {
+        const row = toggle.closest('.profile-row');
+        const label = row ? row.querySelector('.toggle-label') : null;
+        const onText = toggle.dataset.onText || 'Включено';
+        const offText = toggle.dataset.offText || 'Выключено';
 
-    toggle.addEventListener('change', function () {
-        fetch(toggle.dataset.url, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': toggle.dataset.csrf,
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        })
-        .then(res => res.json())
-        .then(data => {
-            label.textContent = data.notified ? 'Анкета отправлена' : 'Анкета не отправлена';
-        })
-        .catch(() => {
-            toggle.checked = !toggle.checked;
+        toggle.addEventListener('change', function () {
+            const prevChecked = !toggle.checked;
+            toggle.disabled = true;
+
+            fetch(toggle.dataset.url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': toggle.dataset.csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error('Request failed');
+                    return res.json();
+                })
+                .then(data => {
+                    const value = Object.values(data)[0];
+                    toggle.checked = value;
+                    if (label) label.textContent = value ? onText : offText;
+                })
+                .catch(() => {
+                    toggle.checked = prevChecked;
+                })
+                .finally(() => {
+                    toggle.disabled = false;
+                });
         });
     });
 });

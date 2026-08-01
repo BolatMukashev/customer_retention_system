@@ -11,4 +11,5 @@ urlpatterns = [
     path('<int:pk>/archive/', views.archive, name='archive'),
     path('search/', views.search, name='search'),
     path('<int:pk>/toggle-notified/', views.toggle_notified, name='toggle_notified'),
+    path('<int:pk>/toggle-reward/', views.toggle_reward, name='toggle_reward'),
 ]

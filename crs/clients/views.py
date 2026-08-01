@@ -144,3 +144,13 @@ def toggle_notified(request, pk):
     client.notified = not client.notified
     client.save(update_fields=['notified'])
     return JsonResponse({'notified': client.notified})
+
+
+@require_POST
+@login_required
+def toggle_reward(request, pk):
+    org = request.user.organization
+    client = get_object_or_404(Client, pk=pk, organization=org)
+    client.reward_received = not client.reward_received
+    client.save(update_fields=['reward_received'])
+    return JsonResponse({'reward_received': client.reward_received})

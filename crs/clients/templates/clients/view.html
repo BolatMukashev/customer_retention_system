@@ -69,14 +69,33 @@
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                 <label class="toggle-switch">
                     <input type="checkbox" id="notified-toggle"
-                           data-url="{% url 'clients:toggle_notified' client.pk %}"
-                           data-csrf="{{ csrf_token }}"
-                           {% if client.notified %}checked{% endif %}>
+                            data-url="{% url 'clients:toggle_notified' client.pk %}"
+                            data-csrf="{{ csrf_token }}"
+                            data-on-text="Анкета отправлена"
+                            data-off-text="Анкета не отправлена"
+                            {% if client.notified %}checked{% endif %}>
                     <span class="toggle-slider"></span>
                 </label>
+
                 <span class="toggle-label" id="notified-label">
                     {% if client.notified %}Анкета отправлена{% else %}Анкета не отправлена{% endif %}
                 </span>
+
+                <div class="profile-row profile-row--reward">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="reward-toggle"
+                            data-url="{% url 'clients:toggle_reward' client.pk %}"
+                            data-csrf="{{ csrf_token }}"
+                            data-on-text="Награда получена"
+                            data-off-text="Награда не получена"
+                            {% if client.reward_received %}checked{% endif %}>
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="toggle-label" id="reward-label">
+                        {% if client.reward_received %}Награда получена{% else %}Награда не получена{% endif %}
+                    </span>
+                </div>
             </div>
             <div class="profile-row">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1-1"/></svg>
