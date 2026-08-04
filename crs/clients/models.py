@@ -42,6 +42,12 @@ class Client(BaseModel):
     )
 
     anketa_completed_at = models.DateTimeField(verbose_name="Анкета завершена клиентом", null=True, blank=True)
+    earned_reward_title = models.CharField(
+        verbose_name='Полученная награда',
+        max_length=100,
+        blank=True,
+        help_text='Фиксируется автоматически при завершении анкеты клиентом'
+    )
     notified = models.BooleanField(verbose_name="Анкета отправлена", default=False)
 
     class Meta:

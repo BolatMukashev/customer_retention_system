@@ -19,8 +19,13 @@ def anketa(request, token):
     if request.method == "POST":
         if request.POST.get("action") == "finish":
             if not client.anketa_completed_at:
+                events_count_now = Event.objects.filter(client=client, is_archived=False).count()
+                reward_count = min(events_count_now, total_steps)
+                earned_title = reward_steps[reward_count - 1].title if reward_count else ''
+
                 client.anketa_completed_at = timezone.now()
-                client.save(update_fields=['anketa_completed_at'])
+                client.earned_reward_title = earned_title
+                client.save(update_fields=['anketa_completed_at', 'earned_reward_title'])
             return redirect('anketa:anketa', token=token)
 
         if not client.anketa_completed_at:
@@ -51,7 +56,7 @@ def anketa(request, token):
         "total_steps": total_steps,
         "reward_steps": reward_steps,
         "is_complete": bool(client.anketa_completed_at),
-        "current_reward": current_reward,
+        "current_reward": client.earned_reward_title if client.anketa_completed_at else current_reward,
         "progress_percent": progress_percent,
         "max_reward_reached": events_count >= total_steps,
         "steps_left": max(0, total_steps - events_count),

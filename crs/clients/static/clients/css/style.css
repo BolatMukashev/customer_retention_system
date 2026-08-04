@@ -459,3 +459,15 @@
     white-space: nowrap;
     max-width: 260px;
 }
+
+.reward-earned-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--gold-bg);
+    color: var(--gold);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+}

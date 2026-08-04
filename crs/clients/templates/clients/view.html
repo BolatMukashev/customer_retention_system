@@ -95,6 +95,9 @@
                     <span class="toggle-label" id="reward-label">
                         {% if client.reward_received %}Награда получена{% else %}Награда не получена{% endif %}
                     </span>
+                    {% if client.earned_reward_title %}
+                    <span class="reward-earned-badge">{{ client.earned_reward_title }}</span>
+                    {% endif %}
                 </div>
             </div>
             <div class="profile-row">
