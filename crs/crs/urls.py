@@ -31,4 +31,5 @@ urlpatterns = [
     path('archive/', include('archive.urls', namespace='archive')),
     path('settings/', include('settings.urls', namespace='settings')),
     path('pay/', include('pay.urls', namespace='pay')),
+    path('anketa/', include('anketa.urls', namespace='anketa')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

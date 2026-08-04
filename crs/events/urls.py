@@ -10,5 +10,4 @@ urlpatterns = [
     path('<int:pk>/edit/', views.edit, name='edit'),
     path('<int:pk>/archive/', views.archive, name='archive'),
     path('<int:pk>/toggle-proposal/', views.toggle_proposal, name='toggle_proposal'),
-    path('anketa/<uuid:token>/', views.anketa, name='anketa'),
 ]

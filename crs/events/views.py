@@ -1,3 +1,5 @@
+# events/views.py
+
 from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -8,8 +10,6 @@ from django.db.models import Avg
 from .models import Event
 from .forms import EventForm
 from orders.models import Order
-from clients.models import Client
-from .forms import AnketaEventForm
 
 
 @login_required
@@ -121,58 +121,3 @@ def archive(request, pk):
     event.archived_at = timezone.now()
     event.save(update_fields=['is_archived', 'archived_at'])
     return redirect('events:index')
-
-
-REWARD_STEPS = [
-    {"title": "Скидка 5%"},
-    {"title": "Скидка 10%"},
-    {"title": "Скидка 15%"},
-    {"title": "Скидка 20%"},
-    {"title": "Скидка 25% + тортик 🎂", "is_super": True},
-]
-
-
-def anketa(request, token):
-    client = get_object_or_404(Client, anketa_token=token, is_archived=False)
-    total_steps = len(REWARD_STEPS)
-
-    if request.method == "POST":
-        if request.POST.get("action") == "finish":
-            if not client.anketa_completed_at:
-                client.anketa_completed_at = timezone.now()
-                client.save(update_fields=['anketa_completed_at'])
-            return redirect('events:anketa', token=token)
-
-        if not client.anketa_completed_at:
-            form = AnketaEventForm(request.POST)
-            if form.is_valid():
-                event = form.save(commit=False)
-                event.client = client
-                event.organization = client.organization
-                event.save()
-                if not client.notified:
-                    client.notified = True
-                    client.save(update_fields=['notified'])
-                return redirect('events:anketa', token=token)
-    else:
-        form = AnketaEventForm()
-
-    events = Event.objects.filter(client=client, is_archived=False).order_by('-created_at')
-    events_count = events.count()
-    reward_count = min(events_count, total_steps)
-    current_reward = REWARD_STEPS[reward_count - 1]["title"] if reward_count else None
-    progress_percent = int(reward_count / total_steps * 100)
-
-    return render(request, "events/anketa.html", {
-        "client": client,
-        "form": form,
-        "events": events,
-        "events_count": events_count,
-        "total_steps": total_steps,
-        "reward_steps": REWARD_STEPS,
-        "is_complete": bool(client.anketa_completed_at),
-        "current_reward": current_reward,
-        "progress_percent": progress_percent,
-        "max_reward_reached": events_count >= total_steps,
-        "steps_left": max(0, total_steps - events_count),
-    })

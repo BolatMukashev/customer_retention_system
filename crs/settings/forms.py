@@ -1,4 +1,5 @@
-# forms.py
+# settings/forms.py
+
 from django import forms
 from organizations.models import Organization
 

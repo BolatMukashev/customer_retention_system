@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'referrals',
     'archive',
     'pay',
+    'anketa.apps.AnketaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

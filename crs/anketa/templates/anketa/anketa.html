@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Анкета — {{ client.name }}</title>
-    <link rel="stylesheet" href="{% static 'events/css/anketa.css' %}">
+    <link rel="stylesheet" href="{% static 'anketa/css/anketa.css' %}">
 </head>
 <body>
 <div class="anketa-page">
@@ -20,7 +20,7 @@
             </div>
             <div class="progress-labels">
                 {% for step in reward_steps %}
-                <span class="progress-label {% if forloop.counter <= events_count %}reached{% endif %} {% if step.is_super %}super{% endif %}">
+                <span class="progress-label {% if forloop.counter <= events_count %}reached{% endif %}">
                     {{ step.title }}
                 </span>
                 {% endfor %}
@@ -42,7 +42,7 @@
                 {% if max_reward_reached %}
                     Максимальная награда открыта: <strong>{{ current_reward }}</strong>. Можно добавить ещё события — или завершить анкету.
                 {% else %}
-                    Уже накоплено: <strong>{{ current_reward }}</strong> — ещё {{ steps_left }} событи{{ steps_left|pluralize:"е,я,й" }} до суперприза
+                    Уже накоплено: <strong>{{ current_reward }}</strong> — добавьтеещё {{ steps_left }} событи{{ steps_left|pluralize:"е,я,й" }} до суперприза
                 {% endif %}
             </div>
             {% endif %}
@@ -112,6 +112,6 @@
 </div>
 
 <script src="{% static 'crs/js/date_linear.js' %}"></script>
-<script src="{% static 'events/js/anketa.js' %}"></script>
+<script src="{% static 'anketa/js/anketa.js' %}"></script>
 </body>
 </html>
