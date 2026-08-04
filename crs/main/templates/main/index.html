@@ -30,7 +30,7 @@
             </nav>
             <div class="header-cta">
                 <a href="{% url 'accounts:login' %}" class="btn btn-ghost btn-sm">Войти</a>
-                <a href="{% url 'organizations:apply' %}" class="btn btn-primary btn-sm">Начать бесплатно</a>
+                <a href="{% url 'organizations:apply' %}" class="btn btn-primary btn-sm">Подключить Revento</a>
             </div>
             <button class="mobile-toggle" id="mobileToggle" aria-label="Меню">
                 <span></span><span></span><span></span>
@@ -61,7 +61,7 @@
                 </p>
                 <div class="hero-actions">
                     <a href="{% url 'organizations:apply' %}" class="btn btn-primary btn-lg">
-                        Попробовать бесплатно
+                        Отправить заявку
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                     </a>
                     <a href="#how" class="btn btn-white btn-lg">Посмотреть как работает</a>
@@ -570,8 +570,8 @@
                             <span>Поддержка 7 дней в неделю</span>
                         </li>
                     </ul>
-                    <a href="{% url 'organizations:apply' %}" class="btn btn-primary btn-block btn-lg pricing-cta">Начать бесплатно</a>
-                    <p class="pricing-guarantee">14 дней бесплатно. Без привязки карты.</p>
+                    <a href="{% url 'organizations:apply' %}" class="btn btn-primary btn-block btn-lg pricing-cta">Подключить Revento</a>
+                    <p class="pricing-guarantee">Запуск за один день</p>
                 </div>
                 <div class="pricing-compare" data-reveal style="--delay:.15s">
                     <h4>Сколько вы теряете сейчас?</h4>
@@ -619,7 +619,7 @@
                         <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Регистрация и первый клиент добавляются за 5 минут. Полная настройка с импортом базы занимает не более 30 минут. Мы проводим бесплатный онбординг для каждого нового пользователя.</p>
+                        <p>Регистрация и первый клиент добавляются за 15 минут. Полная настройка с импортом базы занимает не более 1 дня. Мы проводим бесплатный онбординг для каждого нового пользователя.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal style="--delay:.05s">
@@ -628,7 +628,7 @@
                         <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Загрузите файл за пару кликов — Revento автоматически распознает имена, телефоны и даты. Поддерживаются форматы CSV и XLSX.</p>
+                        <p>Перешлите файл вашему менеджеру, в течении 1 дня данные будут импортированы. Поддерживаются форматы CSV и XLSX.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal style="--delay:.1s">
@@ -646,46 +646,16 @@
                         <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Да, в подписку входит неограниченное количество пользователей. Каждый сотрудник видит только своих клиентов или общую базу — настраивается в один клик.</p>
+                        <p>На текущий момент мы продвигаем идею "Один бизнес — один аккаунт". Все данные находятся в одном месте. Не нужно управлять сотрудниками и настраивать права доступа.</p>
                     </div>
                 </div>
                 <div class="faq-item" data-reveal style="--delay:.2s">
                     <button class="faq-question">
-                        <span>Что будет после 14 дней пробного периода?</span>
+                        <span>Что будет когда подписка закончится?</span>
                         <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
                     </button>
                     <div class="faq-answer">
                         <p>Если подписка не оформлена, доступ к системе приостанавливается, но данные сохраняются. Вы можете оплатить в любой момент и продолжить работу с той же базой.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-card" data-reveal>
-                <div class="cta-content">
-                    <h2>Начните получать повторные заказы уже завтра</h2>
-                    <p>14 дней бесплатно. Без привязки карты. Настройка за 10 минут.</p>
-                    <div class="cta-actions">
-                        <a href="{% url 'organizations:apply' %}" class="btn btn-white btn-lg">Попробовать бесплатно</a>
-                        <span class="cta-note">или <a href="#how">посмотреть, как это работает</a></span>
-                    </div>
-                    <div class="cta-badges">
-                        <span class="cta-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            Без карты
-                        </span>
-                        <span class="cta-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            Данные защищены
-                        </span>
-                        <span class="cta-badge">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            Настройка 10 минут
-                        </span>
                     </div>
                 </div>
             </div>

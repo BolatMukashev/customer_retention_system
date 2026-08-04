@@ -18,6 +18,13 @@
 
     {% if request.user.is_authenticated %}
         <div class="nav-account">
+            {% if subscription_days_left is not None and subscription_days_left <= 7 %}
+            <a href="{% url 'pay:index' %}" class="subscription-alert{% if subscription_days_left <= 2 %} subscription-alert--urgent{% endif %}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                {{ subscription_days_left }} дн. до окончания
+            </a>
+            {% endif %}
+        <div class="nav-account">
             <div class="nav-user-menu">
                 <button type="button" class="nav-user" id="nav-user-trigger">
                     {{ request.user.phone }}

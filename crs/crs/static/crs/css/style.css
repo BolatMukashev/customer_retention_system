@@ -1330,3 +1330,40 @@ button:focus-visible {
 .filter-dot--on {
     background: #2ECC71;
 }
+
+
+/* ==========================================================================
+   Subscription alert (плашка в navbar)
+   ========================================================================== */
+.subscription-alert {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--radius-pill);
+    background: var(--gold-bg);
+    color: #96720A;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.18s var(--ease), transform 0.18s var(--ease);
+}
+
+.subscription-alert:hover {
+    background: #FBE7C2;
+    transform: translateY(-1px);
+}
+
+.subscription-alert svg {
+    flex-shrink: 0;
+}
+
+.subscription-alert--urgent {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+.subscription-alert--urgent:hover {
+    background: rgba(192, 57, 43, 0.16);
+}

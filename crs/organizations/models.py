@@ -1,5 +1,6 @@
 import re
-
+from django.utils import timezone
+from datetime import timedelta
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -161,8 +162,16 @@ class Organization(models.Model):
     last_payment_date = models.DateTimeField(
         verbose_name="Последний платёж",
         null=True,
-        blank=True
+        blank=True,
+        help_text="Обновляется автоматически из модели Payment (приложение pay)"
     )
+
+    @property
+    def subscription_days_left(self):
+        if self.last_payment_date is None:
+            return None
+        end = (self.last_payment_date + timedelta(days=365)).date()
+        return (end - timezone.localdate()).days
 
     class Meta:
         verbose_name = "Организация"
@@ -345,3 +354,4 @@ class Application(models.Model):
         if comment:
             self.comment = comment
         self.save(update_fields=["status", "processed_at", "comment"])
+
