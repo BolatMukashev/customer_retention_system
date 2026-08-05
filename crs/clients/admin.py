@@ -6,4 +6,5 @@ class ClientAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'phone', 'telegram', 'organization', 'created_at')
     list_filter = ('created_at',)
     search_fields = ('name', 'phone')
+    list_display_links = ('id', 'name', 'phone')
 

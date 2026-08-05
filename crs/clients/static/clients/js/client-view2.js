@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.toggle-switch input[data-url]').forEach(function (toggle) {
-        const row = toggle.closest('.bento-cell--status');
+        const row = toggle.closest('.profile-row');
         const label = row ? row.querySelector('.toggle-label') : null;
         const onText = toggle.dataset.onText || 'Включено';
         const offText = toggle.dataset.offText || 'Выключено';

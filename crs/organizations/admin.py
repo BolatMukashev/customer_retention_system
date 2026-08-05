@@ -7,6 +7,7 @@ class OrganizationAdmin(admin.ModelAdmin):
     list_display = ("name", "phone", "type", "tariff", "is_active", "created_at")
     list_filter = ("type", "tariff", "is_active", "currency")
     search_fields = ("name", "phone", "external_id")
+    list_display_links = ('name', 'phone')
 
 
 @admin.register(Application)

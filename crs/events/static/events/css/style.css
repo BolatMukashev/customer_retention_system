@@ -1,11 +1,14 @@
 /* ==========================================================
-   Client detail page
+   Event detail page
    Bento Produtividade Flexível — модульная светлая система
    Inter + JetBrains Mono, пастельная палитра, bento-грид
+   Отдельный файл от clients/css/style.css — общие токены
+   те же, но структура и композиция ячеек своя, под контент
+   события (дата, обратный отсчёт, тип, юбилей).
    ========================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
 
-.client-page {
+.event-page {
     --primary: #ADD8E6;
     --primary-dark: #7FB8CE;
     --primary-bg: #EAF5F9;
@@ -18,9 +21,9 @@
     --peach-dark: #E0996B;
     --lavender: #E6E6FA;
     --lavender-dark: #8E8ED1;
-    --ink: #2B2E33;          /* off-black, no pure #000 */
+    --ink: #2B2E33;
     --ink-soft: #6B7280;
-    --paper: #F0F2F5;        /* neutral page bg */
+    --paper: #F0F2F5;
     --surface: #FFFFFF;
     --border: #E3E6ED;
     --border-strong: #CBD1DE;
@@ -41,7 +44,7 @@
     font-family: var(--font-body);
 }
 
-.client-page .mono {
+.event-page .mono {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     font-weight: 500;
@@ -100,6 +103,12 @@
     text-transform: uppercase;
 }
 
+.event-page .page-head--split > div:last-child {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
 /* ---------- Buttons ---------- */
 .btn {
     display: inline-flex;
@@ -119,12 +128,13 @@
 }
 
 .btn-primary {
-    background-color: var(--primary);
+    background-color: var(--lavender);
     color: var(--ink);
     box-shadow: var(--shadow-card);
 }
 .btn-primary:hover {
-    background-color: var(--primary-dark);
+    background-color: var(--lavender-dark);
+    color: #fff;
     box-shadow: var(--shadow-hover);
     transform: translateY(-2px);
 }
@@ -148,14 +158,14 @@
 }
 
 /* ==========================================================
-   Bento grid — верхний блок (профиль + статистика + статусы)
+   Bento grid — профиль события + карточка даты + статус
    ========================================================== */
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-auto-rows: minmax(64px, auto);
     gap: 16px;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
 }
 
 .bento-cell {
@@ -163,17 +173,23 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-card);
-    transition: box-shadow 0.18s var(--ease), border-color 0.18s var(--ease), transform 0.18s var(--ease);
+    transition: box-shadow 0.18s var(--ease), border-color 0.18s var(--ease);
 }
 
-/* --- Профиль (крупная ячейка) --- */
+/* --- Профиль виновника торжества --- */
 .bento-cell--profile {
-    grid-column: span 8;
-    grid-row: span 3;
+    grid-column: span 7;
+    grid-row: span 2;
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.profile-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
 .profile-avatar {
@@ -191,17 +207,17 @@
     font-weight: 800;
 }
 
-.profile-top {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
 .profile-name {
     font-family: var(--font-display);
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--ink);
+}
+
+.profile-relation {
+    font-size: 0.8125rem;
+    color: var(--ink-soft);
+    margin-top: 2px;
 }
 
 .profile-info {
@@ -214,6 +230,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
     color: var(--ink);
     font-size: 0.9375rem;
 }
@@ -228,82 +245,64 @@
 }
 .profile-row a:hover { border-color: var(--primary-dark); color: var(--primary-dark); }
 
-.profile-row--note {
-    align-items: flex-start;
-    color: var(--ink-soft);
-    font-size: 0.875rem;
-    line-height: 1.6;
-    padding: 10px 12px;
-    background: var(--paper);
-    border-radius: var(--radius-sm);
-}
-
-.anketa-link {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 320px;
-}
-
-.icon-copy-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
-    background: var(--paper);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: background 0.18s var(--ease), border-color 0.18s var(--ease), color 0.18s var(--ease);
-}
-.icon-copy-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary-dark);
-    background: var(--primary-bg);
-}
-.icon-copy-btn.is-copied {
-    border-color: var(--mint-dark);
-    color: var(--mint-dark);
-    background: var(--mint-bg);
-}
-
-/* --- Статистика (три компактные ячейки справа) --- */
-.bento-cell--stat {
-    grid-column: span 4;
-    padding: 16px 20px;
+/* --- Карточка даты (акцентная ячейка) --- */
+.bento-cell--date {
+    grid-column: span 5;
+    grid-row: span 2;
+    padding: 24px;
+    background: var(--lavender);
+    border-color: transparent;
     display: flex;
     flex-direction: column;
+    gap: 14px;
     justify-content: center;
-    gap: 4px;
 }
 
-.stat-value {
+.date-value {
     font-family: var(--font-display);
-    font-size: 1.625rem;
+    font-size: 2rem;
     font-weight: 800;
-    color: var(--ink);
+    color: #3E3670;
     line-height: 1;
 }
 
-.stat-label {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
+.date-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.bento-cell--stat.stat-orders { background: var(--primary-bg); border-color: transparent; }
-.bento-cell--stat.stat-avg { background: #F3F3FC; border-color: transparent; }
-.bento-cell--stat.stat-events { background: var(--mint-bg); border-color: transparent; }
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
 
-/* --- Статусы (две ячейки на всю ширину под профилем) --- */
+.badge-countdown {
+    background: var(--surface);
+    color: #3E3670;
+}
+
+.badge-type {
+    background: var(--primary-bg);
+    color: #1F5B70;
+}
+
+.badge-milestone {
+    background: var(--cream);
+    color: #6B5B10;
+}
+
+/* --- Статус: предложение --- */
 .bento-cell--status {
-    grid-column: span 6;
+    grid-column: span 12;
     padding: 16px 20px;
     display: flex;
     align-items: center;
@@ -327,18 +326,6 @@
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--ink);
-}
-
-.reward-earned-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 10px;
-    border-radius: 999px;
-    background: var(--cream);
-    color: #6B5B10;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
 }
 
 /* ---------- Toggle switch ---------- */
@@ -374,153 +361,25 @@
 .toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); }
 
 /* ==========================================================
-   Списки — События / Заказы
-   ========================================================== */
-.list-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-card);
-    padding: 24px;
-    margin-bottom: 20px;
-}
-
-.section-head {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-bottom: 16px;
-}
-
-.section-head h2 {
-    font-family: var(--font-display);
-    font-size: 1.0625rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    color: var(--ink);
-    margin: 0;
-}
-
-.section-count {
-    font-family: var(--font-mono);
-    color: var(--ink-soft);
-    font-size: 0.75rem;
-}
-
-.row-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.row-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 16px;
-    background: var(--paper);
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    transition: background-color 0.18s var(--ease), border-color 0.18s var(--ease), transform 0.18s var(--ease);
-}
-
-.row-item:hover {
-    background: var(--surface);
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-1px);
-}
-
-.row-main {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-width: 0;
-}
-
-.row-amount {
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--ink);
-}
-
-.row-note {
-    font-size: 0.875rem;
-    color: var(--ink-soft);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.row-date {
-    flex-shrink: 0;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--ink-soft);
-}
-
-.event-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 4px 12px;
-    border-radius: 999px;
-    background: var(--lavender);
-    color: #4A3F8F;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    white-space: nowrap;
-}
-
-/* ---------- Empty states ---------- */
-.empty-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 6px;
-    padding: 36px 24px;
-    background: var(--paper);
-    border: 1.5px dashed var(--border-strong);
-    border-radius: var(--radius-sm);
-    color: var(--ink-soft);
-}
-.empty-state svg { margin-bottom: 6px; color: var(--border-strong); }
-.empty-title {
-    font-family: var(--font-display);
-    font-weight: 700;
-    color: var(--ink);
-    margin: 0;
-    font-size: 0.9375rem;
-}
-.empty-text { font-size: 0.8125rem; margin: 0; max-width: 32ch; }
-
-/* ==========================================================
    Мобильная адаптация
    ========================================================== */
 @media (max-width: 768px) {
     .page-head--split { flex-direction: column; }
-    .page-head--split .btn { width: 100%; justify-content: center; }
+    .event-page .page-head--split > div:last-child { width: 100%; }
+    .event-page .page-head--split .btn { flex: 1; justify-content: center; }
 
     .bento-grid { grid-template-columns: 1fr; gap: 12px; }
     .bento-cell--profile,
-    .bento-cell--stat,
+    .bento-cell--date,
     .bento-cell--status {
         grid-column: 1 / -1;
         grid-row: auto;
     }
-    .bento-cell--stat { flex-direction: row; justify-content: space-between; align-items: center; }
-
-    .list-section { padding: 18px; }
-    .row-item { flex-direction: column; align-items: flex-start; gap: 6px; }
-    .anketa-link { max-width: 60vw; }
+    .date-value { font-size: 1.75rem; }
 }
 
 @media (max-width: 420px) {
     .page-head--split h1 { font-size: 1.625rem; }
-    .bento-cell--profile { padding: 18px; }
+    .bento-cell--profile,
+    .bento-cell--date { padding: 18px; }
 }
