@@ -8,30 +8,37 @@
     <title>Заявка отправлена — Revento</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'organizations/css/style.css' %}">
 </head>
 <body class="organizations">
 
     <header class="header">
         <div class="container header-inner">
-            <a href="/" class="logo">Rev<span>ento</span></a>
+            <a href="{% url 'main:index' %}" class="brand">
+                <span class="brand-mark">R</span>
+                <span class="brand-text">Revento</span>
+            </a>
         </div>
     </header>
 
     <main class="page" style="display: flex; align-items: center; justify-content: center;">
         <div class="card" style="max-width: 440px; margin: 0 auto; padding: 40px 32px; text-align: center;">
-            <div style="width: 56px; height: 56px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--coral-bg); color: var(--coral-dark);">
+            <div style="width: 56px; height: 56px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--accent-light); color: var(--accent-hover);">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
             </div>
             <h1 style="margin-bottom: 12px;">Заявка отправлена</h1>
             <p class="subtitle">Спасибо! Мы получили вашу заявку и свяжемся с вами в ближайшее время, чтобы обсудить подключение.</p>
-            <a href="/" class="btn btn-primary" style="margin-top: 24px; width: 100%;">На главную</a>
+            <a href="{% url 'main:index' %}" class="btn btn-primary" style="margin-top: 24px; width: 100%;">На главную</a>
         </div>
     </main>
 
     <footer class="footer">
         <div class="container footer-inner">
-            <div class="footer-logo">Rev<span>ento</span></div>
+            <div class="footer-logo">
+                <span class="brand-mark">R</span>
+                Revento
+            </div>
             <p>Сервис напоминаний, который возвращает клиентов вовремя</p>
         </div>
     </footer>

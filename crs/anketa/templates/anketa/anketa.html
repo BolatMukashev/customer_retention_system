@@ -42,7 +42,7 @@
                 {% if max_reward_reached %}
                     Максимальная награда открыта: <strong>{{ current_reward }}</strong>. Можно добавить ещё события — или завершить анкету.
                 {% else %}
-                    Уже накоплено: <strong>{{ current_reward }}</strong> — добавьтеещё {{ steps_left }} событи{{ steps_left|pluralize:"е,я,й" }} до суперприза
+                    Уже накоплено: <strong>{{ current_reward }}</strong> — добавьте ещё {{ steps_left }} событи{{ steps_left|pluralize:"е,я,й" }} до суперприза
                 {% endif %}
             </div>
             {% endif %}
