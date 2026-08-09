@@ -72,6 +72,13 @@
                     {% if form.tariff.errors %}<p class="field-error">{{ form.tariff.errors.0 }}</p>{% endif %}
                 </div>
 
+                <div class="form-group form-group-consent">
+                    <label class="consent-label">
+                        <input type="checkbox" name="consent" required>
+                        <span>Я согласен(на) на обработку персональных данных и ознакомлен(а) с <a href="{% url 'main:politics' %}" target="_blank" rel="noopener">Политикой конфиденциальности</a></span>
+                    </label>
+                </div>
+
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Отправить заявку</button>
                 </div>

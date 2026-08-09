@@ -40,7 +40,7 @@
     </div>
     <div class="cards">
         {% for e in recent_events %}
-            {% include "events/_event_card.html" with e=e %}
+            {% include "events/_event_card_empty.html" with e=e %}
         {% endfor %}
     </div>
     {% endif %}

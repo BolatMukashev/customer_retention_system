@@ -96,6 +96,13 @@
                     {{ form.event_date.errors }}
                 </div>
 
+                <div class="form-row form-row-consent">
+                    <label class="consent-label">
+                        <input type="checkbox" name="consent" required>
+                        <span>Я согласен(на) на передачу и обработку указанных данных (даты рождения, годовщины и др.) в соответствии с <a href="{% url 'main:politics' %}" target="_blank" rel="noopener">Политикой конфиденциальности</a></span>
+                    </label>
+                </div>
+
                 <button type="submit" class="btn-submit">Добавить событие</button>
             </form>
 

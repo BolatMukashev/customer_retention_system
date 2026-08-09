@@ -255,6 +255,40 @@ body.organizations {
     width: 100%;
 }
 
+.organizations .form-group-consent {
+    flex-direction: row;
+}
+
+.organizations .consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.organizations .consent-label input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    min-width: 17px;
+    margin: 2px 0 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.organizations .consent-label a {
+    color: var(--accent);
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.organizations .consent-label a:hover {
+    color: var(--accent-hover);
+}
+
 /* ==========================================================================
    Buttons
    ========================================================================== */
