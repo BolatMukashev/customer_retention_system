@@ -1928,7 +1928,12 @@ img {
         display: flex;
     }
 
-    .header-cta { display: none; }
+    .header-cta {
+        display: flex;
+        margin-right: 12px;
+    }
+
+    .header-cta .btn-primary { display: none; }
 
     .hero-title { font-size: 32px; }
     .hero-desc { font-size: 16px; }

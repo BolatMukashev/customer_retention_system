@@ -1051,6 +1051,36 @@ button:focus-visible {
     transition: transform 0.18s var(--ease);
 }
 
+.nav-user-burger {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .navbar {
+        padding: 14px 12px;
+    }
+
+    .nav-account {
+        gap: 8px;
+    }
+
+    .nav-user-phone {
+        display: none;
+    }
+
+    .nav-user-burger {
+        display: block;
+    }
+
+    .nav-user > svg:last-child {
+        display: none;
+    }
+
+    .nav-user {
+        padding: 8px;
+    }
+}
+
 .nav-user-menu:has(.nav-user-dropdown.is-open) .nav-user svg {
     transform: rotate(180deg);
 }
@@ -1239,6 +1269,17 @@ button:focus-visible {
 
 .filters-row .tab-nav {
     margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+    .filters-row .tab-nav {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .filters-row .days-select {
+        width: 100%;
+    }
 }
 
 .client-avg-check {

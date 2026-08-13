@@ -77,6 +77,13 @@
                     <a href="whatsapp://send?phone={{ event.client.phone }}" class="mono">{{ event.client.phone|format_phone }}</a>
                 </div>
 
+                {% if event.client.telegram %}
+                <div class="profile-row">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3 2 12l6 2 2 6 3-4 5 4 4-17Z"/><path d="M20 4 8.5 14.5"/></svg>
+                    <a href="tg://resolve?domain={{ event.client.telegram|cut:'@' }}" class="mono">@{{ event.client.telegram|cut:'@' }}</a>
+                </div>
+                {% endif %}
+
                 {% if avg_check %}
                 <div class="profile-row">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
@@ -84,12 +91,6 @@
                 </div>
                 {% endif %}
 
-                {% if event.client.telegram %}
-                <div class="profile-row">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3 2 12l6 2 2 6 3-4 5 4 4-17Z"/><path d="M20 4 8.5 14.5"/></svg>
-                    <a href="tg://resolve?domain={{ event.client.telegram|cut:'@' }}" class="mono">@{{ event.client.telegram|cut:'@' }}</a>
-                </div>
-                {% endif %}
             </div>
         </section>
 
