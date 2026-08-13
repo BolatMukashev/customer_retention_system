@@ -42,6 +42,7 @@
     color: var(--ink);
     font-family: var(--font-body);
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .client-page *,
@@ -528,21 +529,23 @@
     .page-head--split > div:last-child { display: flex; gap: 10px; }
     .page-head--split .btn { flex: 1 1 auto; width: auto; justify-content: center; }
 
-    .bento-grid { grid-template-columns: 1fr; gap: 12px; }
+    .bento-grid { grid-template-columns: repeat(3, 1fr); gap: 10px 8px; }
     .bento-cell--profile,
-    .bento-cell--stat,
     .bento-cell--status {
         grid-column: 1 / -1;
         grid-row: auto;
     }
     .bento-cell--profile { padding: 20px; }
     .bento-cell--stat {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 14px 18px;
+        grid-column: span 1;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 2px;
+        padding: 12px 10px;
     }
-    .stat-value { font-size: 1.375rem; }
+    .stat-value { font-size: 1.0625rem; }
+    .stat-label { font-size: 0.625rem; }
 
     .bento-cell--status {
         padding: 14px 16px;
@@ -558,7 +561,10 @@
     .row-note { flex: 1 1 auto; min-width: 0; }
     .row-date { align-self: flex-end; }
 
-    .anketa-link { max-width: none; }
+    .anketa-link {
+        max-width: 100%;
+        flex: 1 1 100%;
+    }
 
     .client-autocomplete { width: 100%; }
 }
@@ -571,6 +577,11 @@
 
     .bento-cell--status { flex-wrap: wrap; }
     .reward-earned-badge { margin-left: 0; }
+
+    .bento-grid { gap: 8px 6px; }
+    .bento-cell--stat { padding: 10px 8px; }
+    .stat-value { font-size: 0.9375rem; }
+    .stat-label { font-size: 0.5625rem; letter-spacing: 0.02em; }
 
     .btn { padding: 11px 14px; font-size: 0.8125rem; }
 }
