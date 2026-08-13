@@ -1,11 +1,14 @@
+<!DOCTYPE html>
 {% load event_extras %}
 {% load static %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'events/css/style.css' %}">
-{% endblock %}
-
-{% block content %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ event.person_name }} — карточка события</title>
+    <link rel="stylesheet" href="{% static 'events/css/style.css' %}">
+</head>
+<body>
 <div class="page event-page">
 
     {% if request.GET.from == "client" %}
@@ -57,7 +60,7 @@
         <section class="bento-cell bento-cell--profile">
             <div class="profile-top">
                 <span class="profile-avatar">{{ event.person_name|slice:":1"|upper }}</span>
-                <div>
+                <div style="min-width:0">
                     <div class="profile-name">{{ event.person_name }}</div>
                     <div class="profile-relation">{{ event.get_relation_display }} клиента</div>
                 </div>
@@ -125,4 +128,5 @@
 </div>
 
 <script src="{% static 'events/js/event-view.js' %}"></script>
-{% endblock %}
+</body>
+</html>

@@ -1,11 +1,14 @@
+<!DOCTYPE html>
 {% load event_extras %}
 {% load static %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'crs/css/style.css' %}">
-{% endblock %}
-
-{% block content %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ order.amount|format_money }} {{ org.currency }} — заказ</title>
+    <link rel="stylesheet" href="{% static 'orders/css/style.css' %}">
+</head>
+<body>
 <div class="page client-page">
 
     {% if request.GET.from == "client" %}
@@ -104,5 +107,5 @@
 </div>
 
 <script src="{% static 'orders/js/ev-listener.js' %}"></script>
-
-{% endblock %}
+</body>
+</html>
