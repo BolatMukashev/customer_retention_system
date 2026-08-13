@@ -37,8 +37,17 @@
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Consolas, monospace;
 
     max-width: 880px;
+    width: 100%;
+    margin: 0 auto;
     color: var(--ink);
     font-family: var(--font-body);
+    box-sizing: border-box;
+}
+
+.client-page *,
+.client-page *::before,
+.client-page *::after {
+    box-sizing: border-box;
 }
 
 .client-page .mono {
@@ -195,6 +204,7 @@
     display: flex;
     align-items: center;
     gap: 14px;
+    min-width: 0;
 }
 
 .profile-name {
@@ -202,6 +212,10 @@
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--ink);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .profile-info {
@@ -216,6 +230,8 @@
     gap: 10px;
     color: var(--ink);
     font-size: 0.9375rem;
+    flex-wrap: wrap;
+    min-width: 0;
 }
 
 .profile-row svg { color: var(--ink-soft); flex-shrink: 0; }
@@ -243,6 +259,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 320px;
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 .icon-copy-btn {
@@ -251,6 +269,7 @@
     justify-content: center;
     width: 30px;
     height: 30px;
+    min-width: 30px;
     flex-shrink: 0;
     background: var(--paper);
     border: 1px solid var(--border);
@@ -503,8 +522,11 @@
    Мобильная адаптация
    ========================================================== */
 @media (max-width: 768px) {
-    .page-head--split { flex-direction: column; }
-    .page-head--split .btn { width: 100%; justify-content: center; }
+    .client-page { padding: 0 4px; }
+
+    .page-head--split { flex-direction: column; align-items: stretch; }
+    .page-head--split > div:last-child { display: flex; gap: 10px; }
+    .page-head--split .btn { flex: 1 1 auto; width: auto; justify-content: center; }
 
     .bento-grid { grid-template-columns: 1fr; gap: 12px; }
     .bento-cell--profile,
@@ -513,14 +535,42 @@
         grid-column: 1 / -1;
         grid-row: auto;
     }
-    .bento-cell--stat { flex-direction: row; justify-content: space-between; align-items: center; }
+    .bento-cell--profile { padding: 20px; }
+    .bento-cell--stat {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 18px;
+    }
+    .stat-value { font-size: 1.375rem; }
 
-    .list-section { padding: 18px; }
+    .bento-cell--status {
+        padding: 14px 16px;
+        gap: 10px;
+    }
+    .reward-earned-badge { margin-left: 44px; }
+
+    .list-section { padding: 16px; }
+    .section-head { margin-bottom: 12px; }
+
     .row-item { flex-direction: column; align-items: flex-start; gap: 6px; }
-    .anketa-link { max-width: 60vw; }
+    .row-main { width: 100%; min-width: 0; }
+    .row-note { flex: 1 1 auto; min-width: 0; }
+    .row-date { align-self: flex-end; }
+
+    .anketa-link { max-width: none; }
+
+    .client-autocomplete { width: 100%; }
 }
 
 @media (max-width: 420px) {
     .page-head--split h1 { font-size: 1.625rem; }
-    .bento-cell--profile { padding: 18px; }
+    .bento-cell--profile { padding: 16px; }
+    .profile-avatar { width: 44px; height: 44px; font-size: 1.0625rem; }
+    .profile-name { font-size: 1.0625rem; }
+
+    .bento-cell--status { flex-wrap: wrap; }
+    .reward-earned-badge { margin-left: 0; }
+
+    .btn { padding: 11px 14px; font-size: 0.8125rem; }
 }
