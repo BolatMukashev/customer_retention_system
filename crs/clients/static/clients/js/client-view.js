@@ -5,44 +5,49 @@
 // промежуточной вкладки браузера. На мобильных и во встроенных
 // WebView (Telegram-app, VK, и т.п.) кастомные схемы либо падают
 // с ошибкой, либо игнорируются — там нужна https-ссылка.
+//
+// ВАЖНО: href у ссылок в разметке изначально указывает на
+// https://wa.me / https://t.me — это рабочий вариант "по
+// умолчанию", который сработает даже если этот скрипт не
+// загрузится или упадёт с ошибкой. Скрипт ниже лишь улучшает
+// поведение на десктопе, подменяя схему прямо в момент клика.
 function isDesktopBrowser() {
-    var ua = navigator.userAgent || '';
+    try {
+        var ua = navigator.userAgent || '';
 
-    // Явные признаки мобильной ОС — вне зависимости от режима браузера
-    var mobileOS = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(ua);
-    if (mobileOS) return false;
+        var mobileOS = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(ua);
+        if (mobileOS) return false;
 
-    // Явные признаки встроенных WebView (Telegram desktop-app тоже
-    // рендерит страницы в своём WebView, а не в системном браузере)
-    var inAppWebview =
-        !!window.TelegramWebviewProxy ||               // Telegram WebView (iOS/Android)
-        !!(window.Telegram && window.Telegram.WebApp) || // Telegram Mini App
-        /\bTelegram\b/i.test(ua) ||                      // некоторые сборки светят это в UA
-        /\bwv\b/i.test(ua);                              // Android "WebView" маркер в UA
+        var inAppWebview =
+            !!window.TelegramWebviewProxy ||
+            !!(window.Telegram && window.Telegram.WebApp) ||
+            /\bTelegram\b/i.test(ua) ||
+            /\bwv\b/i.test(ua);
+        if (inAppWebview) return false;
 
-    if (inAppWebview) return false;
+        var coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        if (coarsePointer) return false;
 
-    // Грубая эвристика: у десктопа обычно нет touch как основного
-    // указателя и достаточно широкий экран
-    var coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-    if (coarsePointer) return false;
-
-    return true;
+        return true;
+    } catch (e) {
+        // Если детект сломался — остаёмся на безопасной https-ссылке
+        return false;
+    }
 }
 
 function setupContactLinks() {
     var desktop = isDesktopBrowser();
+    if (!desktop) return; // на мобильных/WebView оставляем https-ссылку из разметки как есть
+
     document.querySelectorAll('.js-contact-link').forEach(function (link) {
         var appHref = link.dataset.appHref;
-        var webHref = link.dataset.webHref;
-        link.href = desktop ? appHref : webHref;
+        if (!appHref) return;
 
-        // На десктопе кастомная схема не должна открывать новую вкладку —
-        // это как раз то, что оставляет "мусорные" вкладки, если браузер
-        // не находит обработчик и просто выводит страницу ошибки/уведомление
-        if (desktop) {
-            link.removeAttribute('target');
-        }
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.location.href = appHref;
+        });
+        link.removeAttribute('target');
     });
 }
 
