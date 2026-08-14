@@ -1,4 +1,54 @@
+// Определяем, стоит ли давать кастомную схему (whatsapp://, tg://)
+// или официальную https-ссылку.
+//
+// На десктопе кастомная схема открывает приложение мгновенно, без
+// промежуточной вкладки браузера. На мобильных и во встроенных
+// WebView (Telegram-app, VK, и т.п.) кастомные схемы либо падают
+// с ошибкой, либо игнорируются — там нужна https-ссылка.
+function isDesktopBrowser() {
+    var ua = navigator.userAgent || '';
+
+    // Явные признаки мобильной ОС — вне зависимости от режима браузера
+    var mobileOS = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(ua);
+    if (mobileOS) return false;
+
+    // Явные признаки встроенных WebView (Telegram desktop-app тоже
+    // рендерит страницы в своём WebView, а не в системном браузере)
+    var inAppWebview =
+        !!window.TelegramWebviewProxy ||               // Telegram WebView (iOS/Android)
+        !!(window.Telegram && window.Telegram.WebApp) || // Telegram Mini App
+        /\bTelegram\b/i.test(ua) ||                      // некоторые сборки светят это в UA
+        /\bwv\b/i.test(ua);                              // Android "WebView" маркер в UA
+
+    if (inAppWebview) return false;
+
+    // Грубая эвристика: у десктопа обычно нет touch как основного
+    // указателя и достаточно широкий экран
+    var coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if (coarsePointer) return false;
+
+    return true;
+}
+
+function setupContactLinks() {
+    var desktop = isDesktopBrowser();
+    document.querySelectorAll('.js-contact-link').forEach(function (link) {
+        var appHref = link.dataset.appHref;
+        var webHref = link.dataset.webHref;
+        link.href = desktop ? appHref : webHref;
+
+        // На десктопе кастомная схема не должна открывать новую вкладку —
+        // это как раз то, что оставляет "мусорные" вкладки, если браузер
+        // не находит обработчик и просто выводит страницу ошибки/уведомление
+        if (desktop) {
+            link.removeAttribute('target');
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+    setupContactLinks();
+
     document.querySelectorAll('.toggle-switch input[data-url]').forEach(function (toggle) {
         const row = toggle.closest('.bento-cell--status');
         const label = row ? row.querySelector('.toggle-label') : null;
