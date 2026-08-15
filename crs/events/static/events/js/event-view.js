@@ -40,6 +40,8 @@ function setupContactLinks() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
+    setupContactLinks();
+
     const toggle = document.getElementById('proposal-toggle');
     const label = document.getElementById('proposal-label');
     if (!toggle) return;
