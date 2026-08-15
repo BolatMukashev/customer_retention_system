@@ -5,8 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
     <title>{{ client.name }} — карточка клиента</title>
     <link rel="stylesheet" href="{% static 'clients/css/style.css' %}">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 <div class="page client-page">
@@ -210,6 +212,16 @@
 
 </div>
 
+<script>
+    (function () {
+        if (window.Telegram && window.Telegram.WebApp) {
+            var tg = window.Telegram.WebApp;
+            try { tg.setBackgroundColor('#F0F2F5'); } catch (e) {}
+            try { tg.setHeaderColor('#F0F2F5'); } catch (e) {}
+            tg.ready();
+        }
+    })();
+</script>
 <script src="{% static 'clients/js/client-view.js' %}"></script>
 </body>
 </html>

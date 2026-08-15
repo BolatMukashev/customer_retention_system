@@ -5,8 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
     <title>{{ event.person_name }} — карточка события</title>
     <link rel="stylesheet" href="{% static 'events/css/style.css' %}">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 <div class="page event-page">
@@ -134,6 +136,16 @@
 
 </div>
 
+<script>
+    (function () {
+        if (window.Telegram && window.Telegram.WebApp) {
+            var tg = window.Telegram.WebApp;
+            try { tg.setBackgroundColor('#F0F2F5'); } catch (e) {}
+            try { tg.setHeaderColor('#F0F2F5'); } catch (e) {}
+            tg.ready();
+        }
+    })();
+</script>
 <script src="{% static 'events/js/event-view.js' %}?v=2"></script>
 </body>
 </html>
