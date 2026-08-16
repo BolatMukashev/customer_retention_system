@@ -41,6 +41,8 @@ def index(request):
         clients = clients.order_by(F('orders_count').desc(nulls_last=True), '-updated_at')[:20]
     elif sort == 'orders_sum':
         clients = clients.order_by(F('orders_sum').desc(nulls_last=True), '-updated_at')[:20]
+    elif sort == 'avg_check':
+        clients = clients.order_by(F('avg_check').desc(nulls_last=True), '-updated_at')[:20]
     else:
         clients = clients[:10]
 

@@ -33,6 +33,7 @@
         <a href="{% url 'clients:index' %}{% if notified_filter %}?notified={{ notified_filter }}{% endif %}" class="filter-chip{% if not sort %} filter-chip--active{% endif %}">Недавние</a>
         <a href="?sort=orders_count{% if notified_filter %}&notified={{ notified_filter }}{% endif %}" class="filter-chip{% if sort == 'orders_count' %} filter-chip--active{% endif %}">Топ-20 по кол-ву заказов</a>
         <a href="?sort=orders_sum{% if notified_filter %}&notified={{ notified_filter }}{% endif %}" class="filter-chip{% if sort == 'orders_sum' %} filter-chip--active{% endif %}">Топ-20 по сумме заказов</a>
+        <a href="?sort=avg_check{% if notified_filter %}&notified={{ notified_filter }}{% endif %}" class="filter-chip{% if sort == 'avg_check' %} filter-chip--active{% endif %}">Топ-20 по среднему чеку</a>
     </div>
 
     <div class="cards">
