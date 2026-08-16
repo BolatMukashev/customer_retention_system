@@ -52,3 +52,12 @@ class AnketaEventForm(forms.ModelForm):
                 'spellcheck': 'false',
             }),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name in ('relation', 'event_type'):
+            field = self.fields[field_name]
+            choices = list(field.choices)
+            if choices and choices[0][0] == '':
+                choices[0] = ('', 'Выберите вариант')
+                field.choices = choices
