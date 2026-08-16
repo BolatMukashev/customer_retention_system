@@ -85,14 +85,45 @@
 
     function initPicker(root) {
         var dateInput = document.getElementById(root.dataset.dateInput);
+        var optional = root.dataset.optional === 'true';
         var dayCol = root.querySelector('[data-role="day"]');
         var monthCol = root.querySelector('[data-role="month"]');
         var yearCol = root.querySelector('[data-role="year"]');
 
+        var hasInitialValue = !!dateInput.value;
         var initial = parseDMYDate(dateInput.value);
         var state = { day: initial.day, month: initial.month, year: initial.year };
+        var isSet = !optional || hasInitialValue;
+
+        var toggleBtn = null;
+        if (optional) {
+            toggleBtn = document.createElement('button');
+            toggleBtn.type = 'button';
+            toggleBtn.className = 'wheel-date-toggle';
+            toggleBtn.textContent = isSet ? 'Очистить дату' : 'Указать дату';
+            toggleBtn.addEventListener('click', function () {
+                isSet = !isSet;
+                root.classList.toggle('is-unset', !isSet);
+                toggleBtn.textContent = isSet ? 'Очистить дату' : 'Указать дату';
+                commit();
+            });
+            root.insertAdjacentElement('afterend', toggleBtn);
+            root.classList.toggle('is-unset', !isSet);
+        }
+
+        function activate() {
+            if (optional && !isSet) {
+                isSet = true;
+                root.classList.remove('is-unset');
+                if (toggleBtn) toggleBtn.textContent = 'Очистить дату';
+            }
+        }
 
         function commit() {
+            if (optional && !isSet) {
+                dateInput.value = '';
+                return;
+            }
             var maxDay = daysInMonth(state.month, state.year);
             if (state.day > maxDay) state.day = maxDay;
             dateInput.value = pad(state.day) + '-' + pad(state.month) + '-' + state.year;
@@ -104,6 +135,7 @@
             var days = [];
             for (var d = 1; d <= maxDay; d++) days.push(d);
             buildColumn(dayCol, days, days.map(String), state.day, function (value) {
+                activate();
                 state.day = parseInt(value, 10);
                 commit();
             });
@@ -112,6 +144,7 @@
         var months = [];
         for (var m = 1; m <= 12; m++) months.push(m);
         buildColumn(monthCol, months, MONTHS, state.month, function (value) {
+            activate();
             state.month = parseInt(value, 10);
             rebuildDayColumn();
             commit();
@@ -121,6 +154,7 @@
         var years = [];
         for (var y = currentYear + 1; y >= currentYear - 100; y--) years.push(y);
         buildColumn(yearCol, years, years.map(String), state.year, function (value) {
+            activate();
             state.year = parseInt(value, 10);
             rebuildDayColumn();
             commit();

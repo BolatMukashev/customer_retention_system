@@ -39,7 +39,13 @@
             </div>
 
             <div class="form-group">
-                <label for="id_birthday">День рождения</label>
+                <label>День рождения</label>
+                <div class="wheel-date-picker" data-date-input="id_birthday" data-optional="true">
+                    <div class="wheel-col" data-role="day"></div>
+                    <div class="wheel-col" data-role="month"></div>
+                    <div class="wheel-col" data-role="year"></div>
+                    <div class="wheel-highlight"></div>
+                </div>
                 {{ form.birthday }}
                 {% if form.birthday.errors %}
                     <p class="field-error">{{ form.birthday.errors.0 }}</p>
@@ -60,4 +66,8 @@
         </form>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'crs/js/date_linear.js' %}"></script>
 {% endblock %}
