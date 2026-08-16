@@ -42,6 +42,11 @@
 
         var items = list.querySelectorAll('.wheel-item');
 
+        // Флаг: true пока идёт программная инициализация колеса.
+        // Пока он true — события scroll не считаются действием пользователя
+        // и не помечают дату как "установленную".
+        var suppressChange = true;
+
         function currentIndex() {
             return Math.max(0, Math.min(items.length - 1, Math.round(col.scrollTop / ITEM_HEIGHT)));
         }
@@ -65,12 +70,23 @@
             settleTimer = setTimeout(function () {
                 var index = currentIndex();
                 selectIndex(index, true);
-                onChange(items[index].dataset.value);
+                if (!suppressChange) {
+                    onChange(items[index].dataset.value);
+                }
             }, 120);
+        });
+
+        // Реальное взаимодействие пользователя (колесо мыши, тач, клик)
+        // снимает подавление — с этого момента scroll-события учитываются
+        ['wheel', 'touchstart', 'pointerdown'].forEach(function (evt) {
+            col.addEventListener(evt, function () {
+                suppressChange = false;
+            }, { passive: true });
         });
 
         items.forEach(function (it, i) {
             it.addEventListener('click', function () {
+                suppressChange = false;
                 selectIndex(i, true);
                 onChange(it.dataset.value);
             });
