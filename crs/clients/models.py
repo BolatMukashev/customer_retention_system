@@ -31,6 +31,7 @@ class Client(BaseModel):
                                 validators=[telegram_validator])
     
     name = models.CharField(verbose_name="Имя", max_length=100)
+    birthday = models.DateField(verbose_name="День рождения", null=True, blank=True)
     note = models.TextField(verbose_name="Примечание", blank=True)
     reward_received = models.BooleanField(verbose_name="Награда получена", default=False)
 

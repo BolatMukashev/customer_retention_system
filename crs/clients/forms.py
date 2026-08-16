@@ -5,7 +5,7 @@ from .models import Client
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = ['name', 'phone', 'telegram', 'note']
+        fields = ['name', 'phone', 'telegram', 'birthday', 'note']
         widgets = {
             "name": forms.TextInput(attrs={
                 "autocomplete": "new-password",
@@ -20,8 +20,15 @@ class ClientForm(forms.ModelForm):
                 "autocorrect": "off",
                 "spellcheck": "false",
             }),
+            "birthday": forms.DateInput(attrs={
+                "type": "date",
+                "autocomplete": "off",
+            }),
             "note": forms.Textarea(attrs={
                 "rows": 3,
                 "autocomplete": "new-password",
             }),
+        }
+        labels = {
+            "birthday": "День рождения",
         }
