@@ -64,7 +64,13 @@
                 <span class="profile-avatar">{{ event.person_name|slice:":1"|upper }}</span>
                 <div style="min-width:0">
                     <div class="profile-name">{{ event.person_name }}</div>
-                    <div class="profile-relation">{{ event.get_relation_display }} клиента</div>
+                    <div class="profile-relation">
+                        {% if event.relation == 'SELF' %}
+                            День рождения клиента
+                        {% else %}
+                            {{ event.get_relation_display }} клиента
+                        {% endif %}
+                    </div>
                 </div>
             </div>
 

@@ -3,6 +3,7 @@
 from django import forms
 from .models import Event
 from clients.models import Client
+from .models import RelationType
 
 
 class HiddenDateInput(forms.DateInput):
@@ -21,7 +22,9 @@ class RussianEmptyChoiceMixin:
             choices = list(field.choices)
             if choices and choices[0][0] == '':
                 choices[0] = ('', 'Выберите вариант')
-                field.choices = choices
+            if field_name == 'relation':
+                choices = [c for c in choices if c[0] != RelationType.SELF]
+            field.choices = choices
 
 
 class EventForm(RussianEmptyChoiceMixin, forms.ModelForm):

@@ -14,6 +14,7 @@ class EventType(models.TextChoices):
 
 
 class RelationType(models.TextChoices):
+    SELF = 'SELF', 'Клиент'          # ← новое, только для авто-события
     WIFE = 'WIFE', 'Жена'
     HUSBAND = 'HUSBAND', 'Муж'
     SON = 'SON', 'Сын'

@@ -11,7 +11,13 @@
                   title="{% if e.proposal_sent %}Предложение отправлено{% else %}Предложение не отправлено{% endif %}"></span>
         </div>
         <div class="card-body">
-            <p class="relation">{{ e.get_relation_display }} по имени <strong>{{ e.person_name }}</strong></p>
+            <p class="relation">
+                {% if e.relation == 'SELF' %}
+                    Собственный день рождения
+                {% else %}
+                    {{ e.get_relation_display }} по имени <strong>{{ e.person_name }}</strong>
+                {% endif %}
+            </p>
             <p class="event-info">
                 <span class="badge badge-type">{{ e.get_event_type_display }}</span>
                 <span class="badge badge-countdown">{% days_until e.event_date %}</span>
