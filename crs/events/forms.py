@@ -12,7 +12,19 @@ class HiddenDateInput(forms.DateInput):
     input_type = 'hidden'
 
 
-class EventForm(forms.ModelForm):
+class RussianEmptyChoiceMixin:
+    empty_choice_fields = ('relation', 'event_type')
+
+    def _apply_russian_empty_choice(self):
+        for field_name in self.empty_choice_fields:
+            field = self.fields[field_name]
+            choices = list(field.choices)
+            if choices and choices[0][0] == '':
+                choices[0] = ('', 'Выберите вариант')
+                field.choices = choices
+
+
+class EventForm(RussianEmptyChoiceMixin, forms.ModelForm):
     event_date = forms.DateField(
         input_formats=['%d-%m-%Y'],
         widget=HiddenDateInput(format='%d-%m-%Y'),
@@ -34,9 +46,11 @@ class EventForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if organization is not None:
             self.fields['client'].queryset = Client.objects.filter(organization=organization)
+        self._apply_russian_empty_choice()
 
 
-class AnketaEventForm(forms.ModelForm):
+
+class AnketaEventForm(RussianEmptyChoiceMixin, forms.ModelForm):
     event_date = forms.DateField(
         input_formats=['%d-%m-%Y'],
         widget=HiddenDateInput(format='%d-%m-%Y'),
@@ -55,9 +69,4 @@ class AnketaEventForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name in ('relation', 'event_type'):
-            field = self.fields[field_name]
-            choices = list(field.choices)
-            if choices and choices[0][0] == '':
-                choices[0] = ('', 'Выберите вариант')
-                field.choices = choices
+        self._apply_russian_empty_choice()
