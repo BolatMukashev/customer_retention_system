@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 from django.db.models import Avg
-from .models import Event
+from .models import Event, RelationType
 from .forms import EventForm
 from orders.models import Order
 
@@ -90,6 +90,8 @@ def view(request, pk):
 def edit(request, pk):
     org = request.user.organization
     event = get_object_or_404(Event, pk=pk, organization=org)
+    if event.relation == RelationType.SELF:
+        return redirect('events:event_view', pk=event.pk)
 
     if request.method == "POST":
         form = EventForm(request.POST, instance=event, organization=org)
@@ -117,6 +119,8 @@ def toggle_proposal(request, pk):
 def archive(request, pk):
     org = request.user.organization
     event = get_object_or_404(Event, pk=pk, organization=org)
+    if event.relation == RelationType.SELF:
+        return redirect('events:event_view', pk=event.pk)
     event.is_archived = True
     event.archived_at = timezone.now()
     event.save(update_fields=['is_archived', 'archived_at'])
