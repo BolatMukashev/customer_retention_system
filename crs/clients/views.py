@@ -9,7 +9,7 @@ from django.db import IntegrityError
 import re
 from django.urls import reverse
 from django.http import JsonResponse
-from django.db.models import Q, Avg
+from django.db.models import Q, Avg, Count, Sum, F
 from events.templatetags.event_extras import format_phone
 from django.views.decorators.http import require_POST
 from datetime import timedelta
@@ -23,6 +23,7 @@ def index(request):
         return redirect('pay:index')
 
     notified_filter = request.GET.get('notified', '')
+    sort = request.GET.get('sort', '')
 
     clients = Client.objects.filter(organization=org, is_archived=False)
     if notified_filter == 'sent':
@@ -30,12 +31,24 @@ def index(request):
     elif notified_filter == 'not_sent':
         clients = clients.filter(notified=False)
 
-    clients = clients.annotate(avg_check=Avg('orders__amount'))[:10]
+    clients = clients.annotate(
+        avg_check=Avg('orders__amount'),
+        orders_count=Count('orders', distinct=True),
+        orders_sum=Sum('orders__amount'),
+    )
+
+    if sort == 'orders_count':
+        clients = clients.order_by(F('orders_count').desc(nulls_last=True), '-updated_at')[:20]
+    elif sort == 'orders_sum':
+        clients = clients.order_by(F('orders_sum').desc(nulls_last=True), '-updated_at')[:20]
+    else:
+        clients = clients[:10]
 
     return render(request, 'clients/index.html', {
         'clients': clients,
         'org': org,
         'notified_filter': notified_filter,
+        'sort': sort,
     })
 
 
